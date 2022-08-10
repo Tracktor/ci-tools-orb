@@ -1,0 +1,8 @@
+description: >
+  Load the version into an environment variable
+
+
+steps:
+  - run:
+      name: Load VERSION
+      command: echo 'export VERSION=$(cat .version)' >> $BASH_ENV

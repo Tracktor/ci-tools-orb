@@ -8,30 +8,51 @@ filters: &filters
     only: /.*/
 
 jobs:
-  # Create a job to test the commands of your orbs.
-  # You may want to add additional validation steps to ensure the commands are working as expected.
-  command-tests:
+  test-python-commands:
+    docker:
+      - image: cimg/python:3.10
+    working_directory: ~/ci-tools-orb/projects/python
+    steps:
+      - checkout:
+          path: ~/ci-tools-orb
+      - sre-utils/export-poetry
+      - sre-utils/load-poetry-version
+      - sre-utils/run-python-tests
+
+  test-docker-commands:
     docker:
       - image: cimg/base:current
+    working_directory: ~/ci-tools-orb/projects/docker
     steps:
-      - checkout
-      # Run your orb's commands to validate them.
-      - ci-tools/greet
+      - setup_remote_docker:
+          version: 20.10.14
+      - checkout:
+          path: ~/ci-tools-orb
+      - sre-utils/build-docker:
+          image_name: "tracktor/orb-test"
+      - sre-utils/publish-docker:
+          image_name: "tracktor/orb-test"
+          registry_pwd: $DOCKER_HUB_PWD
+          registry_user: $DOCKER_HUB_USER
+
 workflows:
   test-deploy:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
-      - command-tests:
+      - test-python-commands:
+          filters: *filters
+      - test-docker-commands:
           filters: *filters
       - orb-tools/pack:
           filters: *filters
       - orb-tools/publish:
-          orb-name: tracktor/ci-tools
+          orb-name: tracktor/sre-orb
           vcs-type: << pipeline.project.type >>
           pub-type: production
           requires:
             - orb-tools/pack
-            - command-tests
+            - test-python-commands
+            - test-docker-commands
           context: orb-publishing
           filters:
             branches:

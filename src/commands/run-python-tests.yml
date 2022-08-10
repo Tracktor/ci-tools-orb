@@ -1,0 +1,32 @@
+description: >
+  Using a pyproject.toml file and poetry, runs pyright then pytest with coverage
+
+parameters:
+  extras:
+    description: "Poetry install extra parameters"
+    default: ""
+    type: string
+  before-steps:
+    description: "Steps that will be executed before dependencies are installed"
+    type: steps
+    default: []
+
+steps:
+  - restore_cache:
+      keys:
+        - deps-{{ checksum "poetry.lock" }}
+  - run:
+      name: Install orb dependencies
+      command: poetry install << parameters.extras >>
+  - save_cache:
+      key: deps-{{ checksum "poetry.lock" }}
+      paths:
+        - /home/circleci/.cache/pypoetry/virtualenvs
+  - steps: << parameters.before-steps >>
+  - run:
+      name: Running tests
+      command: << include(scripts/python/python-tests.sh) >>
+  - store_test_results:
+      path: tests
+  - store_artifacts:
+      path: htmlcov

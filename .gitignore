@@ -1,3 +1,20 @@
 # orb.yml is "packed" from source, and not published directly from the repository.
 orb.yml
 .DS_Store
+
+# Custom
+
+.idea/
+=======
+
+# Python
+
+.pytest_cache/
+__pycache__/
+.coverage
+requirements.txt
+
+# Dcoker
+
+image.tar
+
