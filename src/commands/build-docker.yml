@@ -36,7 +36,7 @@ steps:
             command: echo << parameters.registry_pwd >> | docker login -u << parameters.registry_user >> --password-stdin
 
   - run:
-      name: Build Docker Image with from cache
+      name: Build image
       command: |
         docker pull << parameters.image_name >>:<< parameters.latest_version >> || true
         _build(){
