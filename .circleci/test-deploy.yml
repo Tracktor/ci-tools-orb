@@ -15,9 +15,9 @@ jobs:
     steps:
       - checkout:
           path: ~/ci-tools-orb
-      - sre-utils/export-poetry
-      - sre-utils/load-poetry-version
-      - sre-utils/run-python-tests
+      - ci-tools/export-poetry
+      - ci-tools/load-poetry-version
+      - ci-tools/run-python-tests
 
   test-docker-commands:
     docker:
@@ -28,9 +28,9 @@ jobs:
           version: 20.10.14
       - checkout:
           path: ~/ci-tools-orb
-      - sre-utils/build-docker:
+      - ci-tools/build-docker:
           image_name: "tracktor/orb-test"
-      - sre-utils/publish-docker:
+      - ci-tools/publish-docker:
           image_name: "tracktor/orb-test"
           registry_pwd: $DOCKER_HUB_PWD
           registry_user: $DOCKER_HUB_USER
