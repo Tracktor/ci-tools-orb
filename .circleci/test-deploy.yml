@@ -48,7 +48,7 @@ workflows:
       - orb-tools/pack:
           filters: *filters
       - orb-tools/publish:
-          orb-name: tracktor/sre-orb
+          orb-name: tracktor/ci-tools
           vcs-type: << pipeline.project.type >>
           pub-type: production
           requires:
