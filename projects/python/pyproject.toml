@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "orb"
+version = "0.1.0"
+description = ""
+authors = ["andarius <julien.brayere@tracktor.fr>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+pytest-cov = "^3.0.0"
+pyright = "^1.1.266"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetrore.masonry.api"
+
+[tool.pyright]
+include = []
+exclude = []
+
+pythonVersion = "3.10"
+pythonPlatform = "Linux"
+
+[tool.pytest.ini_options]
+addopts = "--cov=orb -s -q -x"
+testpaths = [
+    "tests"
+]
+python_files = "*.py"
