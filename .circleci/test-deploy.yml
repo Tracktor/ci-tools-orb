@@ -34,8 +34,9 @@ jobs:
           path: ~/ci-tools-orb
       - ci-tools/build-docker:
           image_name: "tracktor/orb-test"
-      - ci-tools/publish-docker:
+      - ci-tools/build-docker:
           image_name: "tracktor/orb-test"
+          publish: true
           registry_pwd: $DOCKER_HUB_PWD
           registry_user: $DOCKER_HUB_USER
 
