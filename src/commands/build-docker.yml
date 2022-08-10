@@ -48,7 +48,7 @@ steps:
             -t << parameters.image_name >>:<< parameters.latest_version >> \
             -f << parameters.dockerfile >> "${@}"
         }
-        if [ << parameters.image_name = true ]; then
+        if [ << parameters.image_name >> = true ]; then
           _build --push .
         else
           _build .
