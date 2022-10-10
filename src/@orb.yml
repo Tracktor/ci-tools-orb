@@ -10,6 +10,8 @@ description: >
     - Docker:
       - Build image (with buildx)
       - Publish image to docker hub
+    - Javascript/Typescript:
+      - Load version from package.json
 
 display:
   source_url: "https://github.com/Tracktor/ci-tools-orb"

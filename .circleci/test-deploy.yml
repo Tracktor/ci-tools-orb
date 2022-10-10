@@ -40,6 +40,15 @@ jobs:
           registry_pwd: $DOCKER_HUB_PWD
           registry_user: $DOCKER_HUB_USER
 
+  test-js-commands:
+    docker:
+      - image: cimg/node:16.17.0
+    working_directory: ~/ci-tools-orb/projects/js
+    steps:
+      - checkout:
+          path: ~/ci-tools-orb
+      - ci-tools/load-package-version
+
 workflows:
   test-deploy:
     jobs:
@@ -47,6 +56,8 @@ workflows:
       - test-python-commands:
           filters: *filters
       - test-docker-commands:
+          filters: *filters
+      - test-js-commands:
           filters: *filters
       - orb-tools/pack:
           filters: *filters
@@ -58,6 +69,7 @@ workflows:
             - orb-tools/pack
             - test-python-commands
             - test-docker-commands
+            - test-js-commands
           context: orb-publishing
           filters:
             branches:

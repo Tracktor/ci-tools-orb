@@ -1,0 +1,9 @@
+description: >
+  Load the version into an environment variable
+  using the value from package.json
+
+
+steps:
+  - run:
+      name: Loading VERSION
+      command: echo 'export VERSION=$(grep version package.json | awk -F \" '{print $4}')' >> $BASH_ENV
