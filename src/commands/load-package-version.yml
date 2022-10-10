@@ -4,5 +4,6 @@ description: >
 
 
 steps:
-  - name: Loading VERSION
-    command: << include(scripts/js/export-version.sh) >>
+  - run:
+      name: Loading VERSION
+      command: << include(scripts/js/export-version.sh) >>
