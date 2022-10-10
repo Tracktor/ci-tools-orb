@@ -6,4 +6,4 @@ description: >
 steps:
   - run:
       name: Loading VERSION
-      command: echo 'export VERSION=$(grep version package.json | awk -F \" '{print $4}')' >> $BASH_ENV
+      command: echo "export VERSION=$(grep version package.json | awk -F \" '{print $4}')" >> $BASH_ENV
