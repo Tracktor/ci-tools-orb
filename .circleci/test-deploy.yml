@@ -48,6 +48,9 @@ jobs:
       - checkout:
           path: ~/ci-tools-orb
       - ci-tools/load-package-version
+      - run:
+          name: Check version
+          command: echo $VERSION
 
 workflows:
   test-deploy:
