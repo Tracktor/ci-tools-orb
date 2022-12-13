@@ -19,12 +19,12 @@ parameters:
 steps:
   - restore_cache:
       keys:
-        - deps-<< cache-version >>-{{ checksum "poetry.lock" }}
+        - deps-<< parameters.cache-version >>-{{ checksum "poetry.lock" }}
   - run:
       name: Install orb dependencies
       command: poetry install << parameters.extras >>
   - save_cache:
-      key: deps-<< cache-version >>-{{ checksum "poetry.lock" }}
+      key: deps-<< parameters.cache-version >>-{{ checksum "poetry.lock" }}
       paths:
         - /home/circleci/.cache/pypoetry/virtualenvs
   - steps: << parameters.before-steps >>
