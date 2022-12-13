@@ -10,16 +10,21 @@ parameters:
     description: "Steps that will be executed before dependencies are installed"
     type: steps
     default: []
+  cache-version:
+    description: "Cache version (needed in case of cache issue)"
+    type: string
+    default: "v0"
+
 
 steps:
   - restore_cache:
       keys:
-        - deps-{{ checksum "poetry.lock" }}
+        - deps-<< cache-version >>-{{ checksum "poetry.lock" }}
   - run:
       name: Install orb dependencies
       command: poetry install << parameters.extras >>
   - save_cache:
-      key: deps-{{ checksum "poetry.lock" }}
+      key: deps-<< cache-version >>-{{ checksum "poetry.lock" }}
       paths:
         - /home/circleci/.cache/pypoetry/virtualenvs
   - steps: << parameters.before-steps >>
