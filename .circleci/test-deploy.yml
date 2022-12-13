@@ -12,7 +12,7 @@ filters: &filters
 jobs:
   test-python-commands:
     docker:
-      - image: cimg/python:3.10
+      - image: cimg/python:3.10.8
     working_directory: ~/ci-tools-orb/projects/python
     steps:
       - checkout:
