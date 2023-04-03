@@ -14,7 +14,10 @@ parameters:
     description: "Cache version (needed in case of cache issue)"
     type: string
     default: "v0"
-
+  skip-lint:
+    description: "Skip linting"
+    type: boolean
+    default: false
 
 steps:
   - restore_cache:
@@ -28,9 +31,13 @@ steps:
       paths:
         - /home/circleci/.cache/pypoetry/virtualenvs
   - steps: << parameters.before-steps >>
-  - run:
-      name: Running lint
-      command: poetry run ruff .
+  -  when:
+        condition:
+          not: << parameters.skip-lint >>
+        steps:
+          - run:
+              name: Running lint
+              command: poetry run ruff .
   - run:
       name: Checking types
       command: poetry run pyright
