@@ -29,6 +29,12 @@ steps:
         - /home/circleci/.cache/pypoetry/virtualenvs
   - steps: << parameters.before-steps >>
   - run:
+      name: Running lint
+      command: poetry run ruff .
+  - run:
+      name: Checking types
+      command: poetry run pyright
+  - run:
       name: Running tests
       command: << include(scripts/python/python-tests.sh) >>
   - store_test_results:
