@@ -39,6 +39,9 @@ steps:
               name: Running lint
               command: poetry run ruff check .
   - run:
+      name: Checking format
+      command: poetry run black --check .
+  - run:
       name: Checking types
       command: poetry run pyright
   - run:
