@@ -29,6 +29,9 @@ steps:
         - /home/circleci/.cache/pypoetry/virtualenvs
   - steps: << parameters.before-steps >>
   - run:
+      name: Checking format
+      command: poetry run black --check .
+  - run:
       name: Running lint
       command: poetry run ruff .
   - run:
