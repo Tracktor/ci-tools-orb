@@ -1,0 +1,33 @@
+description: >
+  Export the environment variables of a project and environment to an .env file
+
+parameters:
+  project_id:
+    type: string
+    description: "ID of the project"
+  env:
+    type: string
+    default: "dev"
+    description: "Name of the environment"
+  token:
+    type: string
+    description: "Token to use to authenticate to the API"
+  extras:
+    default: ""
+    type: string
+    description: "Extra parameters to pass to export (for instance '-f json')"
+  domain:
+    default: "https://sre.tracktor.fr/api"
+    type: string
+    description: "Domain of the API"
+
+steps:
+  - run:
+      name: Export secrets from Infisical to an .env file
+      command: |
+        infisical export \
+          --projectId << parameters.project_id >> \
+          --env << parameters.env >> \
+          --token << parameters.token >> \
+          --domain << parameters.domain >> \
+          << parameters.extras >> > .env
