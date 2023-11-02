@@ -41,6 +41,7 @@ steps:
   - run:
       name: Build image
       command: |
+        docker buildx create --use --name circleci-builder
         docker pull << parameters.image_name >>:<< parameters.cache_version >> || true
         _build(){
           docker buildx build \
