@@ -14,13 +14,13 @@ parameters:
   registry_user:
     default: ""
     type: string
-  version:
+  tag:
     default: "0.0.0"
     type: string
-  cache_version:
+  cache_tag:
     default: "cache"
     type: string
-  latest_version:
+  latest_tag:
     default: "latest"
     type: string
   build_params:
@@ -42,13 +42,14 @@ steps:
       name: Build image
       command: |
         docker buildx create --use --name circleci-builder
-        docker pull << parameters.image_name >>:<< parameters.cache_version >> || true
+        docker pull << parameters.image_name >>:<< parameters.cache_tag >> || true
         _build(){
           docker buildx build \
-            --cache-from << parameters.image_name >>:<< parameters.cache_version >> \
+            --builder circleci-builder \
+            --cache-from << parameters.image_name >>:<< parameters.cache_tag >> \
             --build-arg BUILDKIT_INLINE_CACHE=1 << parameters.build_params >> \
-            -t << parameters.image_name >>:<< parameters.version >> \
-            -t << parameters.image_name >>:<< parameters.latest_version >> \
+            -t << parameters.image_name >>:<< parameters.tag >> \
+            -t << parameters.image_name >>:<< parameters.latest_tag >> \
             -f << parameters.dockerfile >> "${@}"
         }
         if [ << parameters.publish >> = true ]; then
