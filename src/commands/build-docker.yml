@@ -44,7 +44,7 @@ steps:
         docker pull << parameters.image_name >>:<< parameters.cache >> || true
         _build(){
           docker buildx build \
-            --cache-from << parameters.image_name >>:<< parameters.latest_version >> \
+            --cache-from << parameters.image_name >>:<< parameters.cache >> \
             --build-arg BUILDKIT_INLINE_CACHE=1 << parameters.build_params >> \
             -t << parameters.image_name >>:<< parameters.version >> \
             -t << parameters.image_name >>:<< parameters.latest_version >> \
