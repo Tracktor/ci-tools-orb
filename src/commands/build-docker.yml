@@ -41,11 +41,10 @@ steps:
   - run:
       name: Build image
       command: |
-        docker buildx create --use --name circleci-builder
-        docker pull << parameters.image_name >>:<< parameters.cache_tag >> || true
         _build(){
           docker buildx build \
             --builder circleci-builder \
+            --cache-to << parameters.image_name >>:<< parameters.cache_tag >> \
             --cache-from << parameters.image_name >>:<< parameters.cache_tag >> \
             --build-arg BUILDKIT_INLINE_CACHE=1 << parameters.build_params >> \
             -t << parameters.image_name >>:<< parameters.tag >> \
