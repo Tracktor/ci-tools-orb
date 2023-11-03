@@ -17,7 +17,7 @@ parameters:
     type: string
     description: "Extra parameters to pass to export (for instance '-f json')"
   domain:
-    default: "https://sre.tracktor.fr/api"
+    default: "https://app.infisical.com/api"
     type: string
     description: "Domain of the API"
 
