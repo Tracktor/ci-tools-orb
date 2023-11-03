@@ -29,6 +29,9 @@ parameters:
   publish:
     default: false
     type: boolean
+  builder:
+    default: "circleci-builder"
+    type: string
 
 steps:
   - when:
@@ -39,11 +42,15 @@ steps:
             command: echo << parameters.registry_pwd >> | docker login -u << parameters.registry_user >> --password-stdin
 
   - run:
+      name: Create Builder
+      command: docker buildx ls | grep -c << parameters.builder >> || docker buildx create --name << parameters.builder >>
+
+  - run:
       name: Build image
       command: |
         _build(){
           docker buildx build \
-            --builder circleci-builder \
+            --builder << parameters.builder >> \
             --cache-to << parameters.image_name >>:<< parameters.cache_tag >> \
             --cache-from << parameters.image_name >>:<< parameters.cache_tag >> \
             --build-arg BUILDKIT_INLINE_CACHE=1 << parameters.build_params >> \
