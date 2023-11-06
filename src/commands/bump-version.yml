@@ -15,6 +15,7 @@ parameters:
 steps:
   - run:
       name: Bump version
-      command: << include(scripts/bash/bump-version.sh) >> \
-        << parameters.lang >> \
-        << parameters.branch >>
+      environment:
+        LANG_TYPE: << parameters.lang >>
+        BRANCH: << parameters.branch >>
+      command: << include(scripts/bash/bump-version.sh) >>
