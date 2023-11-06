@@ -6,13 +6,14 @@
 # For this script to work, you need to have the following environment variables set:
 # - CI_EMAIL
 # - CI_USER
+# You can also set the following environment variables:
+# - DRY_RUN: if set to true, it will not push to git
 # You will need to have the following tools installed:
-# - poetry
-# - gh
-#
+# - python: poetry with commitizen and the gh cli
+# - js: yarn with commit-and-tag-version
 
 function bump_push_python() {
-  poetry run bump --yes
+  poetry run cz bump --yes
   readonly BUMP_CODE=$?
 
   if [ $BUMP_CODE -eq 0 ]; then
@@ -22,8 +23,12 @@ function bump_push_python() {
     poetry build
     # We need to push before releasing so that the pyproject.toml matches
     # for the cache
-    git push origin "$BRANCH"
-    gh release create -F CHANGELOG.md "$TAG" ./dist/*.whl
+    if [ "$DRY_RUN" == "false" ]; then
+      git push origin "$BRANCH"
+      gh release create -F CHANGELOG.md "$TAG" ./dist/*.whl
+    else
+      echo "Dry run, not pushing"
+    fi
   else
     echo "Bump failed"
     exit 1
@@ -32,7 +37,12 @@ function bump_push_python() {
 
 function bump_push_js() {
   yarn commit-and-tag-version
-  git push origin "$BRANCH" --follow-tags
+   if [ "$DRY_RUN" == "false" ]; then
+     git push origin "$BRANCH" --follow-tags
+  else
+      echo "Dry run, not pushing"
+
+  fi
 }
 
 

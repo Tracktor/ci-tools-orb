@@ -69,6 +69,7 @@ jobs:
           lang: "python"
           ci_user: "test"
           ci_email: "test@test.test"
+          dry_run: true
 
   test-bump-version-js:
     docker:
@@ -85,6 +86,7 @@ jobs:
           lang: "js"
           ci_user: "test"
           ci_email: "test@test.test"
+          dry_run: true
 
 
 workflows:
