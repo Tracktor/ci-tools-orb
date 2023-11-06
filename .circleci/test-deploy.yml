@@ -64,6 +64,8 @@ jobs:
       - ci-tools/bump-version:
           branch: "main"
           lang: "js"
+          ci_user: "test"
+          ci_email: "test@test.test"
 
   test-bump-version-python:
     docker:
@@ -75,6 +77,8 @@ jobs:
       - ci-tools/bump-version:
           branch: "main"
           lang: "js"
+          ci_user: "test"
+          ci_email: "test@test.test"
 
 
 workflows:

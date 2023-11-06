@@ -11,6 +11,14 @@ parameters:
   lang:
     type: string
     description: "Language of the project: js or python"
+  ci_email:
+    type: string
+    description: "Email to use for the git commit"
+    default: CI_EMAIL
+  ci_user:
+    type: string
+    description: "User to use for the git commit"
+    default: CI_USER
 
 steps:
   - run:
@@ -18,4 +26,6 @@ steps:
       environment:
         LANG_TYPE: << parameters.lang >>
         BRANCH: << parameters.branch >>
+        CI_EMAIL: << parameters.ci_email >>
+        CI_USER: << parameters.ci_user >>
       command: << include(scripts/bash/bump-version.sh) >>
