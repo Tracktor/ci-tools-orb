@@ -1,5 +1,19 @@
 {
   "name": "test",
   "version": "0.1.0",
-  "foo": "bar"
+  "foo": "bar",
+  "devDependencies": {
+    "@commitlint/cli": "^17.8.1",
+    "@commitlint/config-conventional": "^17.8.1",
+    "commit-and-tag-version": "^12.0.0"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "commit-and-tag-version": {
+    "releaseCommitMessageFormat": "chore(release): {{currentTag}} [skip ci]",
+    "tagPrefix": ""
+  }
 }

@@ -54,26 +54,30 @@ jobs:
           name: Check version
           command: echo $VERSION
 
-  test-bump-version-js:
+  test-bump-version-python:
     docker:
       - image: cimg/python:3.10.8
     working_directory: ~/ci-tools-orb/projects/python
     steps:
       - checkout:
           path: ~/ci-tools-orb
+      - name: "Install deps"
+        command: poetry install
       - ci-tools/bump-version:
           branch: "main"
-          lang: "js"
+          lang: "python"
           ci_user: "test"
           ci_email: "test@test.test"
 
-  test-bump-version-python:
+  test-bump-version-js:
     docker:
       - image: cimg/node:16.17.0
     working_directory: ~/ci-tools-orb/projects/js
     steps:
       - checkout:
           path: ~/ci-tools-orb
+      - name: "Install deps"
+        command: yarn install
       - ci-tools/bump-version:
           branch: "main"
           lang: "js"
