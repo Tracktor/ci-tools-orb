@@ -50,12 +50,9 @@ function git_init() {
   git config --global user.name "$CI_USER"
 }
 
-export LANG_TYPE=$1
-export BRANCH=${2:-master}
-
 git_init
 
-case $1 in
+case $LANG_TYPE in
 python)
   bump_push_python
   ;;
@@ -64,5 +61,6 @@ js)
   ;;
 *)
   echo "Please choose a command: python or js"
+  exit 1
   ;;
 esac
