@@ -13,9 +13,11 @@
 
 function bump_push_python() {
   poetry run bump --yes
+  readonly BUMP_CODE=$?
 
-  if [ $? -eq 0 ]; then
-    readonly TAG=$(poetry version -s)
+  if [ $BUMP_CODE -eq 0 ]; then
+    TAG=$(poetry version -s)
+    readonly TAG
     poetry run cz changelog "$TAG"
     poetry build
     # We need to push before releasing so that the pyproject.toml matches
