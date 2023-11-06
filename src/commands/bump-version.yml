@@ -1,0 +1,18 @@
+description: >
+  Bump the version of the project based on commit messages.
+  Updates the CHANGELOG.md file.
+
+
+parameters:
+  branch:
+    type: string
+    default: "main"
+    description: "Branch to use to bump the version"
+  lang:
+    type: string
+    description: "Language of the project: js or python"
+
+steps:
+  - run:
+      name: Bump version
+      command: << include(scripts/bash/export-version.sh) >> << parameters.lang >> << parameters.branch >>

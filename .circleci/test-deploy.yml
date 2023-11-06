@@ -54,6 +54,29 @@ jobs:
           name: Check version
           command: echo $VERSION
 
+  test-bump-version-js:
+    docker:
+      - image: cimg/python:3.10.8
+    working_directory: ~/ci-tools-orb/projects/python
+    steps:
+      - checkout:
+          path: ~/ci-tools-orb
+      - ci-tools/bump-version:
+          branch: "main"
+          lang: "js"
+
+  test-bump-version-python:
+    docker:
+      - image: cimg/node:16.17.0
+    working_directory: ~/ci-tools-orb/projects/js
+    steps:
+      - checkout:
+          path: ~/ci-tools-orb
+      - ci-tools/bump-version:
+          branch: "main"
+          lang: "js"
+
+
 workflows:
   test-deploy:
     jobs:
@@ -63,6 +86,10 @@ workflows:
       - test-docker-commands:
           filters: *filters
       - test-js-commands:
+          filters: *filters
+      - test-bump-version-js:
+          filters: *filters
+      - test-bump-version-python:
           filters: *filters
       - orb-tools/pack:
           filters: *filters
@@ -75,6 +102,8 @@ workflows:
             - test-python-commands
             - test-docker-commands
             - test-js-commands
+            - test-bump-version-js
+            - test-bump-version-python
           context: orb-publishing
           filters:
             branches:
