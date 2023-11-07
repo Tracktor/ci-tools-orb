@@ -2,9 +2,6 @@ description: >
   Bump the version of the project based on commit messages.
   Updates the CHANGELOG.md file.
 
-orbs:
-  gh: circleci/github-cli@1.0
-
 
 parameters:
   branch:
@@ -27,12 +24,6 @@ parameters:
     description: "Do not commit or push the changes"
     default: false
 steps:
-  - gh/setup
-  - run:
-      name: Adding github.com to known hosts
-      command: |
-        mkdir -p ~/.ssh
-        ssh-keyscan github.com >> ~/.ssh/known_hosts
   - run:
       name: Bump version
       environment:
