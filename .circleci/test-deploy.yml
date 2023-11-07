@@ -15,9 +15,6 @@ jobs:
       - image: cimg/python:3.10.13-node
         environment:
           PYRIGHT_PYTHON_GLOBAL_NODE: true
-          LC_ALL: C.UTF-8
-          LANG: C.UTF-8
-          LANGUAGE: C.UTF-8
     working_directory: ~/ci-tools-orb/projects/python
     steps:
       - checkout:

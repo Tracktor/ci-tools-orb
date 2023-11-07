@@ -4,12 +4,12 @@ description: >
 parameters:
   extras:
     description: "Poetry install extra parameters"
-    default: ""
+    default: "--no-ansi"
     type: string
   before-steps:
     description: "Steps that will be executed before dependencies are installed"
     type: steps
-    default: []
+    default: [ ]
   cache-version:
     description: "Cache version (needed in case of cache issue)"
     type: string
@@ -31,13 +31,13 @@ steps:
       paths:
         - /home/circleci/.cache/pypoetry/virtualenvs
   - steps: << parameters.before-steps >>
-  -  when:
-        condition:
-          not: << parameters.skip-lint >>
-        steps:
-          - run:
-              name: Running lint
-              command: poetry run ruff check .
+  - when:
+      condition:
+        not: << parameters.skip-lint >>
+      steps:
+        - run:
+            name: Running lint
+            command: poetry run ruff check .
   - run:
       name: Checking format
       command: poetry run black --check .
