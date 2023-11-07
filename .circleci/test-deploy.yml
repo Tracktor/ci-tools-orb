@@ -25,6 +25,7 @@ jobs:
       - ci-tools/load-poetry-version
       - ci-tools/run-python-tests:
           cache-version: "v1"
+          extras: "--all-extras -vvv"
 
   test-docker-commands:
     docker:
