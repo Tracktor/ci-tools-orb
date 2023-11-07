@@ -23,7 +23,8 @@ jobs:
       - ci-tools/export-poetry:
           extras: "--without-hashes"
       - ci-tools/load-poetry-version
-      - ci-tools/run-python-tests
+      - ci-tools/run-python-tests:
+          cache-version: "v1"
 
   test-docker-commands:
     docker:
