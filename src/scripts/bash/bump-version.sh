@@ -18,9 +18,6 @@ if [ "$DRY_RUN" -eq "1" ]; then
    _DRY_RUN="true"
 fi
 
-
-echo "Dry run: $DRY_RUN - $_DRY_RUN"
-
 function bump_push_python() {
   poetry run cz bump --yes
   readonly BUMP_CODE=$?
