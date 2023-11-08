@@ -12,6 +12,8 @@
 # - python: poetry with commitizen and the gh cli
 # - js: yarn with commit-and-tag-version
 
+readonly _DRY_RUN=${DRY_RUN:-"false"}
+
 function bump_push_python() {
   poetry run cz bump --yes
   readonly BUMP_CODE=$?
@@ -23,7 +25,7 @@ function bump_push_python() {
     poetry build
     # We need to push before releasing so that the pyproject.toml matches
     # for the cache
-    if [ "$DRY_RUN" == "false" ]; then
+    if [ "$_DRY_RUN" = "false" ]; then
       git push origin "$BRANCH"
       gh release create -F CHANGELOG.md "$TAG" ./dist/*.whl
     else
@@ -37,11 +39,10 @@ function bump_push_python() {
 
 function bump_push_js() {
   yarn commit-and-tag-version
-   if [ "$DRY_RUN" == "false" ]; then
+   if [ "$_DRY_RUN" = "false" ]; then
      git push origin "$BRANCH" --follow-tags
   else
       echo "Dry run, not pushing"
-
   fi
 }
 
