@@ -12,7 +12,12 @@
 # - python: poetry with commitizen and the gh cli
 # - js: yarn with commit-and-tag-version
 
-readonly _DRY_RUN=${DRY_RUN:-"false"}
+_DRY_RUN="false"
+# shellcheck disable=SC2153
+if [ "$DRY_RUN" -eq "1" ]; then
+   _DRY_RUN="true"
+fi
+
 
 echo "Dry run: $DRY_RUN - $_DRY_RUN"
 
