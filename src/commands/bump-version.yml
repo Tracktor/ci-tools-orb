@@ -31,5 +31,5 @@ steps:
         BRANCH: << parameters.branch >>
         CI_EMAIL: << parameters.ci_email >>
         CI_USER: << parameters.ci_user >>
-        DRY_RUN: << parameters.dry_run >>
+        DRY_RUN: "<< parameters.dry_run >>"
       command: << include(scripts/bash/bump-version.sh) >>
