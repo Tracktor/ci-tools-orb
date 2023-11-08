@@ -14,6 +14,8 @@
 
 readonly _DRY_RUN=${DRY_RUN:-"false"}
 
+echo "Dry run: $DRY_RUN - $_DRY_RUN"
+
 function bump_push_python() {
   poetry run cz bump --yes
   readonly BUMP_CODE=$?
