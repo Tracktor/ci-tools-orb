@@ -23,6 +23,10 @@ parameters:
     type: boolean
     description: "Do not commit or push the changes"
     default: false
+  use_poetry:
+    type: boolean
+    description: "Use poetry to bump the version"
+    default: true
 steps:
   - run:
       name: Bump version
@@ -32,4 +36,5 @@ steps:
         CI_EMAIL: << parameters.ci_email >>
         CI_USER: << parameters.ci_user >>
         DRY_RUN: << parameters.dry_run >>
+        USE_POETRY: << parameters.use_poetry >>
       command: << include(scripts/bash/bump-version.sh) >>

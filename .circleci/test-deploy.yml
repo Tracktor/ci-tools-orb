@@ -73,6 +73,24 @@ jobs:
           ci_email: "test@test.test"
           dry_run: true
 
+  test-bump-version-python-no-poetry:
+    docker:
+      - image: cimg/python:3.10.8
+    working_directory: ~/ci-tools-orb/projects/python-no-poetry
+    steps:
+      - checkout:
+          path: ~/ci-tools-orb
+      - run:
+          name: "Install deps"
+          command: pip install commitizen==3.0.0
+      - ci-tools/bump-version:
+          branch: "main"
+          lang: "python"
+          ci_user: "test"
+          ci_email: "test@test.test"
+          dry_run: true
+          use_poetry: false
+
   test-bump-version-js:
     docker:
       - image: cimg/node:16.17.0
@@ -105,6 +123,8 @@ workflows:
           filters: *filters
       - test-bump-version-python:
           filters: *filters
+      - test-bump-version-python-no-poetry:
+          filters: *filters
       - orb-tools/pack:
           filters: *filters
       - orb-tools/publish:
@@ -118,6 +138,7 @@ workflows:
             - test-js-commands
             - test-bump-version-js
             - test-bump-version-python
+            - test-bump-version-python-no-poetry
           context: orb-publishing
           filters:
             branches:
