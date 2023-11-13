@@ -15,10 +15,24 @@
 _DRY_RUN="false"
 # shellcheck disable=SC2153
 if [ "$DRY_RUN" -eq "1" ]; then
-   _DRY_RUN="true"
+  _DRY_RUN="true"
+fi
+
+_USE_POETRY="true"
+# shellcheck disable=SC2153
+if [ "$USE_POETRY" -eq "0" ]; then
+  _USE_POETRY="false"
 fi
 
 function bump_push_python() {
+  if [ "$_USE_POETRY" = "true" ]; then
+    bump_push_python_poetry
+  else
+    bump_push_python_no_poetry
+  fi
+}
+
+function bump_push_python_poetry() {
   poetry run cz bump --yes
   readonly BUMP_CODE=$?
 
@@ -41,15 +55,35 @@ function bump_push_python() {
   fi
 }
 
-function bump_push_js() {
-  yarn commit-and-tag-version
-   if [ "$_DRY_RUN" = "false" ]; then
-     git push origin "$BRANCH" --follow-tags
-  else
+function bump_push_python_no_poetry() {
+  cz bump --yes
+  readonly BUMP_CODE=$?
+
+  if [ $BUMP_CODE -eq 0 ]; then
+    # shellcheck disable=SC2002
+    TAG=$(cat .cz.toml | grep 'version = ' | cut -d'"' -f2)
+    readonly TAG
+    cz changelog "$TAG"
+    if [ "$_DRY_RUN" = "false" ]; then
+      git push origin "$BRANCH"
+      gh release create -F CHANGELOG.md "$TAG" # ./dist/*.whl
+    else
       echo "Dry run, not pushing"
+    fi
+  else
+    echo "Bump failed"
+    exit 1
   fi
 }
 
+function bump_push_js() {
+  yarn commit-and-tag-version
+  if [ "$_DRY_RUN" = "false" ]; then
+    git push origin "$BRANCH" --follow-tags
+  else
+    echo "Dry run, not pushing"
+  fi
+}
 
 function git_init() {
   if [ -z "$CI_EMAIL" ]; then
