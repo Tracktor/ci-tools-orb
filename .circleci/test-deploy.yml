@@ -123,6 +123,8 @@ workflows:
           filters: *filters
       - test-bump-version-python:
           filters: *filters
+      - test-bump-version-python-no-poetry:
+          filters: *filters
       - orb-tools/pack:
           filters: *filters
       - orb-tools/publish:
@@ -136,6 +138,7 @@ workflows:
             - test-js-commands
             - test-bump-version-js
             - test-bump-version-python
+            - test-bump-version-python-no-poetry
           context: orb-publishing
           filters:
             branches:
