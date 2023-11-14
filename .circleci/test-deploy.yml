@@ -72,7 +72,7 @@ jobs:
           branch: "main"
           lang: "python"
           ci_user: "test"
-          ci_email: $CI_EMAIL
+          ci_email: CI_EMAIL
           dry_run: true
 
   test-bump-version-python-no-build:
