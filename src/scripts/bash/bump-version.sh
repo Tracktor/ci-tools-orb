@@ -31,6 +31,7 @@ if [ "$BUILD" -eq "0" ]; then
 fi
 
 _SIGN_COMMIT="true"
+# shellcheck disable=SC2153
 if [ "$SIGN_COMMIT" -eq "0" ]; then
   _SIGN_COMMIT="false"
 fi
