@@ -116,7 +116,7 @@ function git_init() {
   git config --global user.email "$CI_EMAIL"
   echo "Setting user.name to $CI_USER"
   git config --global user.name "$CI_USER"
-  if [ "$_SIGN_COMMIT" = "true" ]; then
+  if [ "$_SIGN_COMMIT" = "true" ] && [ "$_DRY_RUN" = "false" ]; then
     echo "Setting commit.gpgsign to true"
     git config --global commit.gpgsign true
   fi
