@@ -116,6 +116,9 @@ jobs:
     docker:
       - image: cimg/node:16.17.0
     working_directory: ~/ci-tools-orb/projects/js
+    environment:
+      CI_EMAIL: "test@test.test"
+      CI_USER: "test"
     steps:
       - checkout:
           path: ~/ci-tools-orb
@@ -125,8 +128,6 @@ jobs:
       - ci-tools/bump-version:
           branch: "main"
           lang: "js"
-          ci_user: "test"
-          ci_email: "test@test.test"
           dry_run: true
 
 
