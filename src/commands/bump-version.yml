@@ -14,11 +14,11 @@ parameters:
   ci_email:
     type: string
     description: "Email to use for the git commit"
-    default: CI_EMAIL
+    default: $CI_EMAIL
   ci_user:
     type: string
     description: "User to use for the git commit"
-    default: CI_USER
+    default: $CI_USER
   dry_run:
     type: boolean
     description: "Do not commit or push the changes"
