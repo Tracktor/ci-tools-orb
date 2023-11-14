@@ -62,6 +62,7 @@ jobs:
     working_directory: ~/ci-tools-orb/projects/python
     environment:
       CI_EMAIL: "test@test.test"
+      CI_USER: "test"
     steps:
       - checkout:
           path: ~/ci-tools-orb
@@ -71,14 +72,15 @@ jobs:
       - ci-tools/bump-version:
           branch: "main"
           lang: "python"
-          ci_user: "test"
-          ci_email: CI_EMAIL
           dry_run: true
 
   test-bump-version-python-no-build:
     docker:
       - image: cimg/python:3.10.8
     working_directory: ~/ci-tools-orb/projects/python
+    environment:
+      CI_EMAIL: "test@test.test"
+      CI_USER: "test"
     steps:
       - checkout:
           path: ~/ci-tools-orb
@@ -88,8 +90,6 @@ jobs:
       - ci-tools/bump-version:
           branch: "main"
           lang: "python"
-          ci_user: "test"
-          ci_email: "test@test.test"
           dry_run: true
           build: false
 
@@ -97,7 +97,9 @@ jobs:
     docker:
       - image: cimg/python:3.10.8
     working_directory: ~/ci-tools-orb/projects/python-no-poetry
-
+    environment:
+      CI_EMAIL: "test@test.test"
+      CI_USER: "test"
     steps:
       - checkout:
           path: ~/ci-tools-orb
@@ -107,8 +109,6 @@ jobs:
       - ci-tools/bump-version:
           branch: "main"
           lang: "python"
-          ci_user: "test"
-          ci_email: "test@test.test"
           dry_run: true
           use_poetry: false
 
