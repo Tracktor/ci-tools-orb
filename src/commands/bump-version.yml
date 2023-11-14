@@ -14,11 +14,11 @@ parameters:
   ci_email:
     type: string
     description: "Email to use for the git commit"
-    default: $CI_EMAIL
+    default: ""
   ci_user:
     type: string
     description: "User to use for the git commit"
-    default: $CI_USER
+    default: "CircleCI"
   dry_run:
     type: boolean
     description: "Do not commit or push the changes"
@@ -33,12 +33,17 @@ parameters:
     default: true
 steps:
   - run:
+      name: Checkout
+      command: |
+        echo "user.email   << parameters.ci_email >>"
+        echo "user.user   << parameters.ci_user >>"
+        git config --global user.email << parameters.ci_email >>
+        git config --global user.user << parameters.ci_user >>
+  - run:
       name: Bump version
       environment:
         LANG_TYPE: << parameters.lang >>
         BRANCH: << parameters.branch >>
-        CI_EMAIL: << parameters.ci_email >>
-        CI_USER: << parameters.ci_user >>
         DRY_RUN: << parameters.dry_run >>
         USE_POETRY: << parameters.use_poetry >>
         BUILD: << parameters.build >>
