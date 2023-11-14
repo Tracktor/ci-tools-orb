@@ -30,6 +30,11 @@ if [ "$BUILD" -eq "0" ]; then
   _BUILD="false"
 fi
 
+_SIGN_COMMIT="true"
+if [ "$SIGN_COMMIT" -eq "0" ]; then
+  _SIGN_COMMIT="false"
+fi
+
 function bump_push_python() {
   if [ "$_USE_POETRY" = "true" ]; then
     bump_push_python_poetry
@@ -110,6 +115,11 @@ function git_init() {
   git config --global user.email "$CI_EMAIL"
   echo "Setting user.name to $CI_USER"
   git config --global user.name "$CI_USER"
+  if [ "$_SIGN_COMMIT" = "true" ]; then
+    echo "Setting commit.gpgsign to true"
+    git config --global commit.gpgsign true
+  fi
+
 }
 
 git_init

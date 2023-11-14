@@ -31,6 +31,10 @@ parameters:
     type: boolean
     description: "Build the project after bumping the version (python only)"
     default: true
+  sign:
+    type: boolean
+    description: "Sign the commit"
+    default: true
 steps:
   - run:
       name: Bump version
@@ -40,4 +44,5 @@ steps:
         DRY_RUN: << parameters.dry_run >>
         USE_POETRY: << parameters.use_poetry >>
         BUILD: << parameters.build >>
+        SIGN_COMMIT: << parameters.sign >>
       command: << include(scripts/bash/bump-version.sh) >>
