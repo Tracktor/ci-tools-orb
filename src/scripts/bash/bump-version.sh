@@ -24,6 +24,18 @@ if [ "$USE_POETRY" -eq "0" ]; then
   _USE_POETRY="false"
 fi
 
+_BUILD="true"
+# shellcheck disable=SC2153
+if [ "$BUILD" -eq "0" ]; then
+  _BUILD="false"
+fi
+
+_SIGN_COMMIT="true"
+# shellcheck disable=SC2153
+if [ "$SIGN_COMMIT" -eq "0" ]; then
+  _SIGN_COMMIT="false"
+fi
+
 function bump_push_python() {
   if [ "$_USE_POETRY" = "true" ]; then
     bump_push_python_poetry
@@ -40,12 +52,18 @@ function bump_push_python_poetry() {
     TAG=$(poetry version -s)
     readonly TAG
     poetry run cz changelog "$TAG"
-    poetry build
+    if [ "$_BUILD" = "true" ]; then
+      poetry build
+    fi
     # We need to push before releasing so that the pyproject.toml matches
     # for the cache
     if [ "$_DRY_RUN" = "false" ]; then
       git push origin "$BRANCH"
-      gh release create -F CHANGELOG.md "$TAG" ./dist/*.whl
+      if [ "$_BUILD" = "true" ]; then
+        gh release create -F CHANGELOG.md "$TAG" ./dist/*.whl
+      else
+        gh release create -F CHANGELOG.md "$TAG"
+      fi
     else
       echo "Dry run, not pushing"
     fi
@@ -94,9 +112,15 @@ function git_init() {
     echo "CI_USER is not set"
     exit 1
   fi
-
+  echo "Setting user.email to $CI_EMAIL"
   git config --global user.email "$CI_EMAIL"
+  echo "Setting user.name to $CI_USER"
   git config --global user.name "$CI_USER"
+  if [ "$_SIGN_COMMIT" = "true" ] && [ "$_DRY_RUN" = "false" ]; then
+    echo "Setting commit.gpgsign to true"
+    git config --global commit.gpgsign true
+  fi
+
 }
 
 git_init

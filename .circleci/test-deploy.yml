@@ -60,6 +60,9 @@ jobs:
     docker:
       - image: cimg/python:3.10.8
     working_directory: ~/ci-tools-orb/projects/python
+    environment:
+      CI_EMAIL: "test@test.test"
+      CI_USER: "test"
     steps:
       - checkout:
           path: ~/ci-tools-orb
@@ -69,14 +72,34 @@ jobs:
       - ci-tools/bump-version:
           branch: "main"
           lang: "python"
-          ci_user: "test"
-          ci_email: "test@test.test"
           dry_run: true
+
+  test-bump-version-python-no-build:
+    docker:
+      - image: cimg/python:3.10.8
+    working_directory: ~/ci-tools-orb/projects/python
+    environment:
+      CI_EMAIL: "test@test.test"
+      CI_USER: "test"
+    steps:
+      - checkout:
+          path: ~/ci-tools-orb
+      - run:
+          name: "Install deps"
+          command: poetry install
+      - ci-tools/bump-version:
+          branch: "main"
+          lang: "python"
+          dry_run: true
+          build: false
 
   test-bump-version-python-no-poetry:
     docker:
       - image: cimg/python:3.10.8
     working_directory: ~/ci-tools-orb/projects/python-no-poetry
+    environment:
+      CI_EMAIL: "test@test.test"
+      CI_USER: "test"
     steps:
       - checkout:
           path: ~/ci-tools-orb
@@ -86,8 +109,6 @@ jobs:
       - ci-tools/bump-version:
           branch: "main"
           lang: "python"
-          ci_user: "test"
-          ci_email: "test@test.test"
           dry_run: true
           use_poetry: false
 
@@ -95,6 +116,9 @@ jobs:
     docker:
       - image: cimg/node:16.17.0
     working_directory: ~/ci-tools-orb/projects/js
+    environment:
+      CI_EMAIL: "test@test.test"
+      CI_USER: "test"
     steps:
       - checkout:
           path: ~/ci-tools-orb
@@ -104,8 +128,6 @@ jobs:
       - ci-tools/bump-version:
           branch: "main"
           lang: "js"
-          ci_user: "test"
-          ci_email: "test@test.test"
           dry_run: true
 
 
@@ -123,6 +145,8 @@ workflows:
           filters: *filters
       - test-bump-version-python:
           filters: *filters
+      - test-bump-version-python-no-build:
+          filters: *filters
       - test-bump-version-python-no-poetry:
           filters: *filters
       - orb-tools/pack:
@@ -139,6 +163,7 @@ workflows:
             - test-bump-version-js
             - test-bump-version-python
             - test-bump-version-python-no-poetry
+            - test-bump-version-python-no-build
           context: orb-publishing
           filters:
             branches:

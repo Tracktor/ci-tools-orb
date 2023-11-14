@@ -12,11 +12,11 @@ parameters:
     type: string
     description: "Language of the project: js or python"
   ci_email:
-    type: string
+    type: env_var_name
     description: "Email to use for the git commit"
     default: CI_EMAIL
   ci_user:
-    type: string
+    type: env_var_name
     description: "User to use for the git commit"
     default: CI_USER
   dry_run:
@@ -25,7 +25,15 @@ parameters:
     default: false
   use_poetry:
     type: boolean
-    description: "Use poetry to bump the version"
+    description: "Use poetry to bump the version (python only)"
+    default: true
+  build:
+    type: boolean
+    description: "Build the project after bumping the version (python only)"
+    default: true
+  sign:
+    type: boolean
+    description: "Sign the commit"
     default: true
 steps:
   - run:
@@ -33,8 +41,8 @@ steps:
       environment:
         LANG_TYPE: << parameters.lang >>
         BRANCH: << parameters.branch >>
-        CI_EMAIL: << parameters.ci_email >>
-        CI_USER: << parameters.ci_user >>
         DRY_RUN: << parameters.dry_run >>
         USE_POETRY: << parameters.use_poetry >>
+        BUILD: << parameters.build >>
+        SIGN_COMMIT: << parameters.sign >>
       command: << include(scripts/bash/bump-version.sh) >>
