@@ -24,6 +24,12 @@ if [ "$USE_POETRY" -eq "0" ]; then
   _USE_POETRY="false"
 fi
 
+_BUILD="true"
+# shellcheck disable=SC2153
+if [ "$BUILD" -eq "0" ]; then
+  _BUILD="false"
+fi
+
 function bump_push_python() {
   if [ "$_USE_POETRY" = "true" ]; then
     bump_push_python_poetry
@@ -40,12 +46,18 @@ function bump_push_python_poetry() {
     TAG=$(poetry version -s)
     readonly TAG
     poetry run cz changelog "$TAG"
-    poetry build
+    if [ "$_BUILD" = "true" ]; then
+      poetry build
+    fi
     # We need to push before releasing so that the pyproject.toml matches
     # for the cache
     if [ "$_DRY_RUN" = "false" ]; then
       git push origin "$BRANCH"
-      gh release create -F CHANGELOG.md "$TAG" ./dist/*.whl
+      if [ "$_BUILD" = "true" ]; then
+        gh release create -F CHANGELOG.md "$TAG" ./dist/*.whl
+      else
+        gh release create -F CHANGELOG.md "$TAG"
+      fi
     else
       echo "Dry run, not pushing"
     fi

@@ -60,6 +60,25 @@ jobs:
     docker:
       - image: cimg/python:3.10.8
     working_directory: ~/ci-tools-orb/projects/python
+    environment:
+      CI_EMAIL: "test@test.test"
+    steps:
+      - checkout:
+          path: ~/ci-tools-orb
+      - run:
+          name: "Install deps"
+          command: poetry install
+      - ci-tools/bump-version:
+          branch: "main"
+          lang: "python"
+          ci_user: "test"
+          ci_email: $CI_EMAIL
+          dry_run: true
+
+  test-bump-version-python-no-build:
+    docker:
+      - image: cimg/python:3.10.8
+    working_directory: ~/ci-tools-orb/projects/python
     steps:
       - checkout:
           path: ~/ci-tools-orb
@@ -72,11 +91,13 @@ jobs:
           ci_user: "test"
           ci_email: "test@test.test"
           dry_run: true
+          build: false
 
   test-bump-version-python-no-poetry:
     docker:
       - image: cimg/python:3.10.8
     working_directory: ~/ci-tools-orb/projects/python-no-poetry
+
     steps:
       - checkout:
           path: ~/ci-tools-orb
@@ -123,6 +144,8 @@ workflows:
           filters: *filters
       - test-bump-version-python:
           filters: *filters
+      - test-bump-version-python-no-build:
+          filters: *filters
       - test-bump-version-python-no-poetry:
           filters: *filters
       - orb-tools/pack:
@@ -139,6 +162,7 @@ workflows:
             - test-bump-version-js
             - test-bump-version-python
             - test-bump-version-python-no-poetry
+            - test-bump-version-python-no-build
           context: orb-publishing
           filters:
             branches:

@@ -25,7 +25,11 @@ parameters:
     default: false
   use_poetry:
     type: boolean
-    description: "Use poetry to bump the version"
+    description: "Use poetry to bump the version (python only)"
+    default: true
+  build:
+    type: boolean
+    description: "Build the project after bumping the version (python only)"
     default: true
 steps:
   - run:
@@ -37,4 +41,5 @@ steps:
         CI_USER: << parameters.ci_user >>
         DRY_RUN: << parameters.dry_run >>
         USE_POETRY: << parameters.use_poetry >>
+        BUILD: << parameters.build >>
       command: << include(scripts/bash/bump-version.sh) >>
