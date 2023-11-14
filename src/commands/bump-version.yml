@@ -37,8 +37,6 @@ steps:
       environment:
         LANG_TYPE: << parameters.lang >>
         BRANCH: << parameters.branch >>
-        CI_EMAIL: << parameters.ci_email >>
-        CI_USER: << parameters.ci_user >>
         DRY_RUN: << parameters.dry_run >>
         USE_POETRY: << parameters.use_poetry >>
         BUILD: << parameters.build >>
