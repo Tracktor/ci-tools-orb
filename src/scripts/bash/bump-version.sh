@@ -94,8 +94,9 @@ function git_init() {
     echo "CI_USER is not set"
     exit 1
   fi
-
+  echo "Setting user.email to $CI_EMAIL"
   git config --global user.email "$CI_EMAIL"
+  echo "Setting user.name to $CI_USER"
   git config --global user.name "$CI_USER"
 }
 
