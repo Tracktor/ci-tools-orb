@@ -34,7 +34,7 @@ parameters:
   sign:
     type: boolean
     description: "Sign the commit"
-    default: true
+    default: false
 steps:
   - run:
       name: Bump version

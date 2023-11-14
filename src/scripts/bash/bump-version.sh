@@ -30,10 +30,10 @@ if [ "$BUILD" -eq "0" ]; then
   _BUILD="false"
 fi
 
-_SIGN_COMMIT="true"
+_SIGN_COMMIT="false"
 # shellcheck disable=SC2153
-if [ "$SIGN_COMMIT" -eq "0" ]; then
-  _SIGN_COMMIT="false"
+if [ "$SIGN_COMMIT" -eq "1" ]; then
+  _SIGN_COMMIT="true"
 fi
 
 function bump_push_python() {
