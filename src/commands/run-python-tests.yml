@@ -18,6 +18,13 @@ parameters:
     description: "Skip linting"
     type: boolean
     default: false
+  formatter:
+    description: "Library used to check format"
+    type: enum
+    default: black
+    enum:
+      - black
+      - ruff
 
 steps:
   - restore_cache:
@@ -38,9 +45,20 @@ steps:
         - run:
             name: Running lint
             command: poetry run ruff check .
-  - run:
-      name: Checking format
-      command: poetry run black --check .
+  - when:
+      condition:
+        equal: [ black, << parameters.formatter >> ]
+      steps:
+        - run:
+            name: Checking format
+            command: poetry run black --check .
+  - when:
+      condition:
+        equal: [ ruff, << parameters.formatter >> ]
+      steps:
+        - run:
+            name: Checking format
+            command: poetry run ruff format --check .
   - run:
       name: Checking types
       command: poetry run pyright
