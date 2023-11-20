@@ -48,13 +48,17 @@ steps:
   - when:
       condition:
         equal: [ black, << parameters.formatter >> ]
-      name: Checking format
-      command: poetry run black --check .
+      steps:
+        - run:
+            name: Checking format
+            command: poetry run black --check .
   - when:
       condition:
         equal: [ ruff, << parameters.formatter >> ]
-      name: Checking format
-      command: poetry run ruff format --check .
+      steps:
+        - run:
+            name: Checking format
+            command: poetry run ruff format --check .
   - run:
       name: Checking types
       command: poetry run pyright
