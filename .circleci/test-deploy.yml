@@ -24,6 +24,8 @@ jobs:
           extras: "--without-hashes"
       - ci-tools/load-poetry-version
       - ci-tools/run-python-tests
+      - ci-tools/run-python-tests:
+          formatter: "ruff"
 
   test-docker-commands:
     docker:
