@@ -98,6 +98,7 @@ function bump_push_js() {
   yarn commit-and-tag-version
   if [ "$_DRY_RUN" = "false" ]; then
     git push origin "$BRANCH" --follow-tags
+    gh release create -F CHANGELOG.md "$TAG"
   else
     echo "Dry run, not pushing"
   fi
