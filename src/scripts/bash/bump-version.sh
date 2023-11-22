@@ -96,11 +96,12 @@ function bump_push_python_no_poetry() {
 
 function bump_push_js() {
   yarn commit-and-tag-version
+  TAG=$(grep '"version":' ./package.json | cut -d\" -f4)
   if [ "$_DRY_RUN" = "false" ]; then
     git push origin "$BRANCH" --follow-tags
     gh release create -F CHANGELOG.md "$TAG"
   else
-    echo "Dry run, not pushing"
+    echo "Dry run, not pushing (version: $TAG)"
   fi
 }
 
