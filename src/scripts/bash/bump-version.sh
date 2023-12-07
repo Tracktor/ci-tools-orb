@@ -45,7 +45,7 @@ function bump_push_python() {
 }
 
 function bump_push_python_poetry() {
-  poetry run cz bump --yes
+  poetry run cz -nr 21 bump --yes
   readonly BUMP_CODE=$?
 
   if [ $BUMP_CODE -eq 0 ]; then
@@ -74,7 +74,7 @@ function bump_push_python_poetry() {
 }
 
 function bump_push_python_no_poetry() {
-  cz bump --yes
+  cz -nr 21 bump --yes
   readonly BUMP_CODE=$?
 
   if [ $BUMP_CODE -eq 0 ]; then
