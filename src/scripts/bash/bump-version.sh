@@ -67,7 +67,7 @@ function bump_push_python_poetry() {
     else
       echo "Dry run, not pushing"
     fi
-  elif [[ $VAR -eq 21 ]]; then
+  elif [ $BUMP_CODE -eq 21 ]; then
     echo "No bump found"
   else
     echo "Bump failed"
@@ -90,7 +90,7 @@ function bump_push_python_no_poetry() {
     else
       echo "Dry run, not pushing"
     fi
-  elif [[ $VAR -eq 21 ]]; then
+  elif [ $BUMP_CODE -eq 21 ]; then
     echo "No bump found"
   else
     echo "Bump failed"
