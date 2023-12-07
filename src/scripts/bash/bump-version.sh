@@ -45,7 +45,7 @@ function bump_push_python() {
 }
 
 function bump_push_python_poetry() {
-  poetry run cz -nr 21 bump --yes
+  poetry run cz bump --yes
   readonly BUMP_CODE=$?
 
   if [ $BUMP_CODE -eq 0 ]; then
@@ -67,6 +67,8 @@ function bump_push_python_poetry() {
     else
       echo "Dry run, not pushing"
     fi
+  elif [[ $VAR -eq 21 ]]; then
+    echo "No bump found"
   else
     echo "Bump failed"
     exit 1
@@ -74,7 +76,7 @@ function bump_push_python_poetry() {
 }
 
 function bump_push_python_no_poetry() {
-  cz -nr 21 bump --yes
+  cz bump --yes
   readonly BUMP_CODE=$?
 
   if [ $BUMP_CODE -eq 0 ]; then
@@ -88,6 +90,8 @@ function bump_push_python_no_poetry() {
     else
       echo "Dry run, not pushing"
     fi
+  elif [[ $VAR -eq 21 ]]; then
+    echo "No bump found"
   else
     echo "Bump failed"
     exit 1
