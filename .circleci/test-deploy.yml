@@ -12,7 +12,7 @@ filters: &filters
 jobs:
   test-python-commands:
     docker:
-      - image: cimg/python:3.10.13-node
+      - image: cimg/python:3.12.1-node
         environment:
           PYRIGHT_PYTHON_GLOBAL_NODE: true
     working_directory: ~/ci-tools-orb/projects/python
@@ -48,7 +48,7 @@ jobs:
 
   test-js-commands:
     docker:
-      - image: cimg/node:16.17.0
+      - image: cimg/node:18.20.4
     working_directory: ~/ci-tools-orb/projects/js
     steps:
       - checkout:
@@ -60,7 +60,7 @@ jobs:
 
   test-bump-version-python:
     docker:
-      - image: cimg/python:3.10.8
+      - image: cimg/python:3.12.1
     working_directory: ~/ci-tools-orb/projects/python
     environment:
       CI_EMAIL: "test@test.test"
@@ -78,7 +78,7 @@ jobs:
 
   test-bump-version-python-no-build:
     docker:
-      - image: cimg/python:3.10.8
+      - image: cimg/python:3.12.1
     working_directory: ~/ci-tools-orb/projects/python
     environment:
       CI_EMAIL: "test@test.test"
@@ -97,7 +97,7 @@ jobs:
 
   test-bump-version-python-no-poetry:
     docker:
-      - image: cimg/python:3.10.8
+      - image: cimg/python:3.12.1
     working_directory: ~/ci-tools-orb/projects/python-no-poetry
     environment:
       CI_EMAIL: "test@test.test"
@@ -116,7 +116,7 @@ jobs:
 
   test-bump-version-js:
     docker:
-      - image: cimg/node:16.17.0
+      - image: cimg/node:18.20.4
     working_directory: ~/ci-tools-orb/projects/js
     environment:
       CI_EMAIL: "test@test.test"
