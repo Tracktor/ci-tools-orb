@@ -12,7 +12,7 @@ filters: &filters
 jobs:
   test-python-commands:
     docker:
-      - image: cimg/python:3.10.13-node
+      - image: cimg/python:3.12.1-node
         environment:
           PYRIGHT_PYTHON_GLOBAL_NODE: true
     working_directory: ~/ci-tools-orb/projects/python
