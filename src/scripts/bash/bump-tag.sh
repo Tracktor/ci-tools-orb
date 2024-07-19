@@ -34,7 +34,6 @@ _next_release_tag=$(echo "$_latest_release_tag" | awk -F'.' '{print $1"."$2+1".0
 
 function get_next_inc_tag(){
     _release_name=$1
-#    echo  "=> ${_next_release_tag//./\\.}-${_release_name}\.[0-9]*"
     local _tag
     _tag=$(get_tag "${_next_release_tag}-${_release_name}\.[0-9]*")
     if [ -z "$_tag" ]; then
@@ -46,15 +45,15 @@ function get_next_inc_tag(){
 }
 
 _branch=$(git branch --show-current)
-echo "Current branch $_branch"
+#echo "Current branch $_branch"
 if [ "$_branch" = "develop" ]; then
     _next_beta_tag=$(get_next_inc_tag "beta")
-    echo "New beta tag: $_next_beta_tag"
+#    echo "New beta tag: $_next_beta_tag"
     if [ "$AUTO_TAG" = "true" ]; then
         git tag "$_next_beta_tag"
     fi
 elif [ "$_branch" = "$MAIN_BRANCH" ]; then
-    echo "New main tag: $_next_release_tag"
+#    echo "New main tag: $_next_release_tag"
     if [ "$AUTO_TAG" = "true" ]; then
         git tag "$_next_release_tag"
     fi

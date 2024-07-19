@@ -1,6 +1,6 @@
 description: >
-  Bump the version of the project based on commit messages.
-  Updates the CHANGELOG.md file.
+  Bump the tag of the repository depending on the branch and
+  past tags.
 
 
 parameters:
