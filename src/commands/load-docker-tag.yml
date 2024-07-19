@@ -11,4 +11,4 @@ steps:
       name: Loading LATEST_DOCKER_TAG
       environment:
         MAIN_BRANCH: << parameters.main_branch >>
-      command: << include(scripts/js/export-docker-tag.sh) >>
+      command: << include(scripts/docker/export-docker-tag.sh) >>
