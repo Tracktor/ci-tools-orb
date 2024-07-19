@@ -16,4 +16,5 @@ else
     echo "Could not determine the latest tag"
     exit 1
 fi
-export LATEST_DOCKER_TAG=$_tag  >> "$BASH_ENV"
+
+echo "export LATEST_DOCKER_TAG=$_tag" >> "$BASH_ENV"
