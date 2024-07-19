@@ -4,7 +4,7 @@ description: >
 
 
 parameters:
-  branch:
+  main_branch:
     type: string
     default: "main"
     description: "Branch to use to bump the tag"
