@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # Ruff
-poetry run ruff .
+poetry run ruff check .
