@@ -26,7 +26,14 @@ if [ -z "$BRANCH" ]; then
   _BRANCH=$(git branch --show-current)
 fi
 
-pipx run track-bump "$_VERBOSE" bump --branch "$_BRANCH" "$_flags" "$CUSTOM_PARAMS"
+cmd="pipx run track-bump"
+[ -n "$_VERBOSE" ] && cmd+=" $_VERBOSE"
+cmd+=" bump --branch $_BRANCH"
+[ -n "$_flags" ] && cmd+=" $_flags"
+[ -n "$CUSTOM_PARAMS" ] && cmd+=" $CUSTOM_PARAMS"
+
+# Execute the command
+eval "$cmd"
 
 if [ "$_DRY_RUN" = "false" ]; then
   git push origin "$_BRANCH" --follow-tags
