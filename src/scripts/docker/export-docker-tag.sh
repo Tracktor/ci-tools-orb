@@ -6,8 +6,17 @@ readonly DEFAULT_BRANCH=${DEFAULT_BRANCH:-main}
 
 _branch="$BRANCH"
 if [ -z "$_branch" ]; then
-    _branch=$(git branch --show-current)
+  # Source: https://discuss.circleci.com/t/circle-branch-and-pipeline-git-branch-are-empty/44317/3
+  # determine branch from tag using commit ID.
+  # Note: "git branch -a --contains <tag>" could return multiple entries
+  #       however, since the pipeline runs right after the tag is commited
+  #       this should not become an issue
+  _commit=$(git show-ref | grep "${CIRCLE_TAG}" | awk '{print $1}')
+  _tmp=$(git branch -a --contains "$_commit")
+  _branch="${_tmp##*/}"
 fi
+
+echo "Branch: $_branch"
 
 _tag=
 if [ "$_branch" = "develop" ]; then
