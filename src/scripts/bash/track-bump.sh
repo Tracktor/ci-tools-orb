@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-set -xe
-
-export MAIN_BRANCH=${DEFAULT_BRANCH}
+set -e
 
 _DRY_RUN="false"
 # shellcheck disable=SC2153
@@ -10,10 +8,10 @@ if [ "$DRY_RUN" -eq "1" ]; then
   _DRY_RUN="true"
 fi
 
-_GEN_CHANGELOG="false"
+_CREATE_RELEASE="false"
 # shellcheck disable=SC2153
-if [ "$GEN_CHANGELOG" -eq "1" ]; then
-  _GEN_CHANGELOG="true"
+if [ "$CREATE_RELEASE" -eq "1" ]; then
+  _CREATE_RELEASE="true"
 fi
 
 _VERBOSE=
@@ -42,10 +40,9 @@ cmd+=" bump --branch $_branch"
 # Execute the command
 eval "$cmd"
 
-if [ "$_GEN_CHANGELOG" = "true" ]; then
+if [ "$_CREATE_RELEASE" = "true" ]; then
   echo "Generating CHANGELOG"
   pipx run git-cliff -o CHANGELOG.md --latest
-  # Remove last line
   sed -i '$ d' CHANGELOG.md
   git add CHANGELOG.md
   git commit --amend --no-edit
@@ -62,8 +59,10 @@ rm "$_tag_file"
 if [ "$_DRY_RUN" = "false" ]; then
   echo "Pushing branch $_branch and tag $TAG"
   git push origin "$_branch" --follow-tags
-  echo "Creating Github release $TAG"
-  gh release create -F CHANGELOG.md "$TAG"
+  if [ "$_CREATE_RELEASE" = "true" ]; then
+    echo "Creating Github release $TAG"
+    gh release create -F CHANGELOG.md "$TAG"
+  fi
 else
   echo "Dry run, not pushing (branch: $_branch, version: $TAG)"
 fi
