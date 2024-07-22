@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -xe
 
 _DRY_RUN="false"
 # shellcheck disable=SC2153
