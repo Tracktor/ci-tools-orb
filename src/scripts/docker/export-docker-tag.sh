@@ -2,21 +2,22 @@
 
 set -e
 
-readonly MAIN_BRANCH=${MAIN_BRANCH:-master}
+readonly DEFAULT_BRANCH=${DEFAULT_BRANCH:-main}
 
-# Take current branch if BRANCH is not set
-if [ -z "$BRANCH" ]; then
-    BRANCH=$(git branch --show-current)
+_branch="$BRANCH"
+if [ -z "$_branch" ]; then
+    _branch=$(git branch --show-current)
 fi
+
 _tag=
-if [ "$BRANCH" = "develop" ]; then
+if [ "$_branch" = "develop" ]; then
     _tag="latest-beta"
-elif [[ "$BRANCH" == release/* ]]; then
+elif [[ "$_branch" == release/* ]]; then
     _tag="latest-rc"
-elif [ "$BRANCH" = "$MAIN_BRANCH" ]; then
+elif [ "$_branch" = "$DEFAULT_BRANCH" ]; then
     _tag="latest"
 else
-    echo "Could not determine the latest tag"
+    echo "Could not determine the latest tag for branch $_branch"
     exit 1
 fi
 
