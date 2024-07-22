@@ -137,7 +137,7 @@ jobs:
       - image: cimg/python:3.12.1
     working_directory: ~/ci-tools-orb/projects/python-track-bump
     environment:
-      CI_EMAIL: "test@test.test"
+      CI_USER_EMAIL: "test@test.test"
       CI_USER: "test"
     steps:
       - checkout:
@@ -154,6 +154,7 @@ jobs:
           path: ~/ci-tools-orb
       - ci-tools/load-docker-tag:
           main_branch: "main"
+          branch: "main"
 
 workflows:
   test-deploy:
