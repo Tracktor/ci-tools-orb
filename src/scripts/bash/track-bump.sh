@@ -53,7 +53,7 @@ TAG=$(pipx run track-bump get-latest-tag --branch "$_branch")
 
 if [ "$_DRY_RUN" = "false" ]; then
   echo "Pushing branch $_branch and tag $TAG"
-  git push origin "$_branch" --follow-tags
+  git push origin "$_branch" --tags
   if [ "$_CREATE_RELEASE" = "true" ]; then
     echo "Creating Github release $TAG"
     gh release create -F CHANGELOG.md "$TAG"
