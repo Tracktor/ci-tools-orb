@@ -7,7 +7,7 @@ parameters:
     default: ""
     description: "Branch to use to bump the version"
   default_branch:
-    type: env_var_name
+    type: string
     default: "main"
     description: "Default branch"
   ci_user_email:
@@ -43,4 +43,5 @@ steps:
         CUSTOM_PARAMS: << parameters.params >>
         DRY_RUN: << parameters.dry_run >>
         VERBOSE: << parameters.verbose >>
+        DEFAULT_BRANCH: << parameters.default_branch >>
       command: << include(scripts/bash/track-bump.sh) >>
