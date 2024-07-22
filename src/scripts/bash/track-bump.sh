@@ -53,10 +53,11 @@ else
   echo "Not generating CHANGELOG"
 fi
 
-echo "Getting latest tag"
-TAG=$(git tag -l --sort=-version:refname | head -n 1)
-echo $?
-echo "Latest tag: $TAG"
+# Redirect git tag output to a temporary file to avoid SIGPIPE issue
+_tag_file=$(mktemp)
+git tag -l --sort=-version:refname > "$_tag_file"
+TAG=$(head -n 1 "$_tag_file")
+rm "$_tag_file"
 
 if [ "$_DRY_RUN" = "false" ]; then
   echo "Pushing branch $_branch and tag $TAG"
