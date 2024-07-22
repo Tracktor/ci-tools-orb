@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -xe
 
 export MAIN_BRANCH=${DEFAULT_BRANCH}
 
