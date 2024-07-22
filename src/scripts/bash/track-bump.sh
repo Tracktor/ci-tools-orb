@@ -36,9 +36,11 @@ cmd+=" bump --branch $_branch"
 # Execute the command
 eval "$cmd"
 
+TAG=$(git tag -l --sort=-version:refname  | head -n 1)
+
 if [ "$_DRY_RUN" = "false" ]; then
-  git push origin "$_BRANCH" --follow-tags
+  git push origin "$_branch" --follow-tags
   gh release create -F CHANGELOG.md "$TAG"
 else
-  echo "Dry run, not pushing (branch: $BRANCH, version: $TAG)"
+  echo "Dry run, not pushing (branch: $_branch, version: $TAG)"
 fi
