@@ -39,7 +39,9 @@ eval "$cmd"
 TAG=$(git tag -l --sort=-version:refname  | head -n 1)
 
 if [ "$_DRY_RUN" = "false" ]; then
+  echo "Pushing branch $_branch and tag $TAG"
   git push origin "$_branch" --follow-tags
+  echo "Creating Github release $TAG"
   gh release create -F CHANGELOG.md "$TAG"
 else
   echo "Dry run, not pushing (branch: $_branch, version: $TAG)"
