@@ -54,7 +54,9 @@ else
 fi
 
 echo "Getting latest tag"
-TAG=$(git tag -l --sort=-version:refname  | head -n 1)
+TAG=$(git tag -l --sort=-version:refname | head -n 1)
+echo $?
+echo "Latest tag: $TAG"
 
 if [ "$_DRY_RUN" = "false" ]; then
   echo "Pushing branch $_branch and tag $TAG"
