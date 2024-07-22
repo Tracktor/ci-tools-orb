@@ -72,7 +72,7 @@ jobs:
           name: "Install deps"
           command: poetry install
       - ci-tools/bump-version:
-          branch: "main"
+#          branch: "main"
           lang: "python"
           dry_run: true
 

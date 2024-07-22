@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -xe
 
 export MAIN_BRANCH=${DEFAULT_BRANCH}
 
@@ -23,7 +23,7 @@ if [ "$SIGN_COMMIT" -eq "1" ]; then
 fi
 
 _branch="$BRANCH"
-if [ -n "$_branch" ]; then
+if [ -z "$_branch" ]; then
   _branch=$(git branch --show-current)
 fi
 
