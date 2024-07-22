@@ -4,13 +4,16 @@ set -e
 
 readonly MAIN_BRANCH=${MAIN_BRANCH:-master}
 
-_branch=$(git branch --show-current)
+# Take current branch if BRANCH is not set
+if [ -z "$BRANCH" ]; then
+    BRANCH=$(git branch --show-current)
+fi
 _tag=
-if [ "$_branch" = "develop" ]; then
+if [ "$BRANCH" = "develop" ]; then
     _tag="latest-beta"
-elif [[ "$_branch" == release/* ]]; then
+elif [[ "$BRANCH" == release/* ]]; then
     _tag="latest-rc"
-elif [ "$_branch" = "$MAIN_BRANCH" ]; then
+elif [ "$BRANCH" = "$MAIN_BRANCH" ]; then
     _tag="latest"
 else
     echo "Could not determine the latest tag"

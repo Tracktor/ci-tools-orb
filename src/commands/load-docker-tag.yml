@@ -6,9 +6,15 @@ parameters:
     type: string
     default: "main"
     description: "Branch to use to bump the tag"
+  branch:
+    type: string
+    default: ""
+    description: "Branch to get the version from"
+
 steps:
   - run:
       name: Loading LATEST_DOCKER_TAG
       environment:
         MAIN_BRANCH: << parameters.main_branch >>
+        BRANCH: << parameters.branch >>
       command: << include(scripts/docker/export-docker-tag.sh) >>

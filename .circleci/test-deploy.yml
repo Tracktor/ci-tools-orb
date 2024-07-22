@@ -132,6 +132,29 @@ jobs:
           lang: "js"
           dry_run: true
 
+  test-python-track-bump:
+    docker:
+      - image: cimg/python:3.12.1
+    working_directory: ~/ci-tools-orb/projects/python-track-bump
+    environment:
+      CI_USER_EMAIL: "test@test.test"
+      CI_USER: "test"
+    steps:
+      - checkout:
+          path: ~/ci-tools-orb
+      - ci-tools/track-bump:
+          dry_run: true
+
+  test-docker-tag:
+    docker:
+      - image: cimg/python:3.12.1
+    working_directory: ~/ci-tools-orb/projects/python-track-bump
+    steps:
+      - checkout:
+          path: ~/ci-tools-orb
+      - ci-tools/load-docker-tag:
+          main_branch: "main"
+          branch: "main"
 
 workflows:
   test-deploy:
@@ -151,6 +174,10 @@ workflows:
           filters: *filters
       - test-bump-version-python-no-poetry:
           filters: *filters
+      - test-python-track-bump:
+          filters: *filters
+      - test-docker-tag:
+          filters: *filters
       - orb-tools/pack:
           filters: *filters
       - orb-tools/publish:
@@ -166,6 +193,8 @@ workflows:
             - test-bump-version-python
             - test-bump-version-python-no-poetry
             - test-bump-version-python-no-build
+            - test-python-track-bump
+            - test-docker-tag
           context: orb-publishing
           filters:
             branches:
