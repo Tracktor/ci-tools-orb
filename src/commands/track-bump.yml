@@ -6,10 +6,10 @@ parameters:
     type: string
     default: "main"
     description: "Branch to use to bump the version"
-  main_branch:
+  default_branch:
     type: env_var_name
     default: "main"
-    description: "Branch to use to bump the tag minor"
+    description: "Default branch"
   ci_user_email:
     type: env_var_name
     description: "Email to use for the git commit"

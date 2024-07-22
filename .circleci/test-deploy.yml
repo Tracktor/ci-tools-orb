@@ -144,6 +144,8 @@ jobs:
           path: ~/ci-tools-orb
       - ci-tools/track-bump:
           dry_run: true
+          verbose: true
+          default_branch: "main"
 
   test-docker-tag:
     docker:
@@ -153,7 +155,7 @@ jobs:
       - checkout:
           path: ~/ci-tools-orb
       - ci-tools/load-docker-tag:
-          main_branch: "main"
+          default_branch: "main"
           branch: "main"
 
 workflows:

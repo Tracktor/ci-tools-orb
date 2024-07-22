@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-set -xe
+set -e
+
+export MAIN_BRANCH=${DEFAULT_BRANCH}
 
 _DRY_RUN="false"
 # shellcheck disable=SC2153
