@@ -30,6 +30,10 @@ parameters:
     type: boolean
     description: "Do not commit or push the changes"
     default: false
+  verbose:
+    type: boolean
+    description: "Print the commands executed"
+    default: false
 steps:
   - run:
       name: Bump version
@@ -38,4 +42,5 @@ steps:
         SIGN_COMMIT: << parameters.sign >>
         CUSTOM_PARAMS: << parameters.params >>
         DRY_RUN: << parameters.dry_run >>
+        VERBOSE: << parameters.verbose >>
       command: << include(scripts/bash/track-bump.sh) >>
