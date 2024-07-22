@@ -24,7 +24,7 @@ fi
 
 _BRANCH=$BRANCH
 # shellcheck disable=SC2153
-if [ -z "$BRANCH" ]; then
+if [ -n "$_BRANCH" ]; then
   _BRANCH=$(git branch --show-current)
 fi
 

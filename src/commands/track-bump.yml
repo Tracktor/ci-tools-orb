@@ -4,7 +4,7 @@ description: >
 parameters:
   branch:
     type: string
-    default: "main"
+    default: ""
     description: "Branch to use to bump the version"
   default_branch:
     type: env_var_name
