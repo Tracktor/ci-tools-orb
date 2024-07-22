@@ -22,15 +22,14 @@ if [ "$SIGN_COMMIT" -eq "1" ]; then
   _flags="--sign"
 fi
 
-_BRANCH=$BRANCH
-# shellcheck disable=SC2153
-if [ -n "$_BRANCH" ]; then
-  _BRANCH=$(git branch --show-current)
+_branch="$BRANCH"
+if [ -n "$_branch" ]; then
+  _branch=$(git branch --show-current)
 fi
 
 cmd="pipx run track-bump"
 [ -n "$_VERBOSE" ] && cmd+=" $_VERBOSE"
-cmd+=" bump --branch $_BRANCH"
+cmd+=" bump --branch $_branch"
 [ -n "$_flags" ] && cmd+=" $_flags"
 [ -n "$CUSTOM_PARAMS" ] && cmd+=" $CUSTOM_PARAMS"
 
