@@ -39,7 +39,7 @@ cmd+=" bump --branch $_branch"
 # Execute the command
 eval "$cmd"
 
-if [ "$_CREATE_RELEASE" = "true" ]; then
+if [ "$_CREATE_RELEASE" = "true" ] && [ "$_DRY_RUN" = "false" ]; then
   echo "Generating CHANGELOG"
   pipx run git-cliff -o CHANGELOG.md --latest
   sed -i '$ d' CHANGELOG.md
