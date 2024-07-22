@@ -148,6 +148,19 @@ jobs:
           dry_run: true
           use_poetry: false
 
+  test-docker-tag:
+    docker:
+      - image: cimg/python:3.12.1
+    working_directory: ~/ci-tools-orb/projects/python-track-bump
+    steps:
+      - checkout:
+          path: ~/ci-tools-orb
+      - ci-tools/load-docker-tag:
+          main_branch: "main"
+          lang: "python"
+          dry_run: true
+          use_poetry: false
+
 workflows:
   test-deploy:
     jobs:
@@ -166,6 +179,10 @@ workflows:
           filters: *filters
       - test-bump-version-python-no-poetry:
           filters: *filters
+      - test-python-track-bump:
+          filters: *filters
+      - test-docker-tag:
+          filters: *filters
       - orb-tools/pack:
           filters: *filters
       - orb-tools/publish:
@@ -181,6 +198,8 @@ workflows:
             - test-bump-version-python
             - test-bump-version-python-no-poetry
             - test-bump-version-python-no-build
+            - test-python-track-bump
+            - test-docker-tag
           context: orb-publishing
           filters:
             branches:
