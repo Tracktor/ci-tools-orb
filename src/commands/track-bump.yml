@@ -38,10 +38,10 @@ steps:
   - run:
       name: Bump version
       environment:
+        DEFAULT_BRANCH: << parameters.default_branch >>
         BRANCH: << parameters.branch >>
         SIGN_COMMIT: << parameters.sign >>
         CUSTOM_PARAMS: << parameters.params >>
         DRY_RUN: << parameters.dry_run >>
         VERBOSE: << parameters.verbose >>
-        DEFAULT_BRANCH: << parameters.default_branch >>
       command: << include(scripts/bash/track-bump.sh) >>
