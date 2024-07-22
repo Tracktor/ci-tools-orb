@@ -1,0 +1,38 @@
+description: >
+  Bump version and tags of the project
+
+parameters:
+  branch:
+    type: string
+    default: "main"
+    description: "Branch to use to bump the version"
+  ci_email:
+    type: env_var_name
+    description: "Email to use for the git commit"
+    default: CI_EMAIL
+  ci_user:
+    type: env_var_name
+    description: "User to use for the git commit"
+    default: CI_USER
+  sign:
+    type: boolean
+    description: "Sign the commit"
+    default: false
+  params:
+    type: string
+    description: "Arguments to pass to the bump"
+  dry_run:
+    type: boolean
+    description: "Do not commit or push the changes"
+    default: false
+steps:
+  - run:
+      name: Bump version
+      environment:
+        BRANCH: << parameters.branch >>
+        SIGN_COMMIT: << parameters.sign >>
+        CI_EMAIL: << parameters.ci_email >>
+        CI_USER: << parameters.ci_user >>
+        CUSTOM_PARAMS: << parameters.params >>
+        DRY_RUN: << parameters.dry_run >>
+      command: << include(scripts/bash/track-bump.sh) >>
