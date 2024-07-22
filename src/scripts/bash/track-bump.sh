@@ -20,7 +20,7 @@ if [ "$SIGN_COMMIT" -eq "1" ]; then
   _flags="--sign"
 fi
 
-_BRANCH=
+_BRANCH=$BRANCH
 # shellcheck disable=SC2153
 if [ -z "$BRANCH" ]; then
   _BRANCH=$(git branch --show-current)
