@@ -146,7 +146,6 @@ jobs:
           dry_run: true
           verbose: true
           default_branch: "main"
-          create_release: false
 
   test-docker-tag:
     docker:
