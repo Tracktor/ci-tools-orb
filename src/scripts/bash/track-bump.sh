@@ -42,8 +42,6 @@ cmd+=" bump --branch $_branch"
 # Execute the command
 eval "$cmd"
 
-TAG=$(git tag -l --sort=-version:refname  | head -n 1)
-
 if [ "$_GEN_CHANGELOG" = "true" ]; then
   echo "Generating CHANGELOG"
   pipx run git-cliff -o CHANGELOG.md --latest
@@ -54,6 +52,9 @@ if [ "$_GEN_CHANGELOG" = "true" ]; then
 else
   echo "Not generating CHANGELOG"
 fi
+
+echo "Getting latest tag"
+TAG=$(git tag -l --sort=-version:refname  | head -n 1)
 
 if [ "$_DRY_RUN" = "false" ]; then
   echo "Pushing branch $_branch and tag $TAG"
