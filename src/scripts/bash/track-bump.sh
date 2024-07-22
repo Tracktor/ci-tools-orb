@@ -8,19 +8,19 @@ if [ "$DRY_RUN" -eq "1" ]; then
   _DRY_RUN="true"
 fi
 
-_VERBOSE=""
+_VERBOSE=
 # shellcheck disable=SC2153
 if [ "$VERBOSE" -eq "1" ]; then
   _VERBOSE="-vv"
 fi
 
-_flags=""
+_flags=
 # shellcheck disable=SC2153
 if [ "$SIGN_COMMIT" -eq "1" ]; then
   _flags="--sign"
 fi
 
-_BRANCH=""
+_BRANCH=
 # shellcheck disable=SC2153
 if [ -z "$BRANCH" ]; then
   _BRANCH=$(git branch --show-current)
