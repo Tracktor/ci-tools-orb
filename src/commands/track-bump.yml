@@ -34,10 +34,6 @@ parameters:
     type: boolean
     description: "Print the commands executed"
     default: false
-  create_release:
-    type: boolean
-    description: "Create a release"
-    default: false
 steps:
   - run:
       name: Bump version
@@ -47,5 +43,4 @@ steps:
         CUSTOM_PARAMS: << parameters.params >>
         DRY_RUN: << parameters.dry_run >>
         VERBOSE: << parameters.verbose >>
-        CREATE_RELEASE: << parameters.create_release >>
       command: << include(scripts/bash/track-bump.sh) >>

@@ -8,12 +8,6 @@ if [ "$DRY_RUN" -eq "1" ]; then
   _DRY_RUN="true"
 fi
 
-_CREATE_RELEASE="false"
-# shellcheck disable=SC2153
-if [ "$CREATE_RELEASE" -eq "1" ]; then
-  _CREATE_RELEASE="true"
-fi
-
 _VERBOSE=
 # shellcheck disable=SC2153
 if [ "$VERBOSE" -eq "1" ]; then
@@ -29,6 +23,11 @@ fi
 _branch="$BRANCH"
 if [ -z "$_branch" ]; then
   _branch=$(git branch --show-current)
+fi
+
+_CREATE_RELEASE="false"
+if [ "$_branch" = "$DEFAULT_BRANCH" ]; then
+  _CREATE_RELEASE="true"
 fi
 
 cmd="pipx run track-bump"
@@ -50,11 +49,7 @@ else
   echo "Not generating CHANGELOG"
 fi
 
-# Redirect git tag output to a temporary file to avoid SIGPIPE issue
-_tag_file=$(mktemp)
-git tag -l --sort=-version:refname > "$_tag_file"
-TAG=$(head -n 1 "$_tag_file")
-rm "$_tag_file"
+TAG=$(pipx run track-bump get-latest-tag --branch "$_branch")
 
 if [ "$_DRY_RUN" = "false" ]; then
   echo "Pushing branch $_branch and tag $TAG"
