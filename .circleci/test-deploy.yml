@@ -143,10 +143,7 @@ jobs:
       - checkout:
           path: ~/ci-tools-orb
       - ci-tools/track-bump:
-          branch: "main"
-          lang: "python"
           dry_run: true
-          use_poetry: false
 
   test-docker-tag:
     docker:
@@ -157,9 +154,6 @@ jobs:
           path: ~/ci-tools-orb
       - ci-tools/load-docker-tag:
           main_branch: "main"
-          lang: "python"
-          dry_run: true
-          use_poetry: false
 
 workflows:
   test-deploy:
