@@ -24,7 +24,7 @@ parameters:
     default: false
   params:
     type: string
-    default: '''
+    default: ''
     description: "Arguments to pass to the bump"
   dry_run:
     type: boolean
