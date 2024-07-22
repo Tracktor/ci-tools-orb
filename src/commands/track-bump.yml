@@ -34,6 +34,10 @@ parameters:
     type: boolean
     description: "Print the commands executed"
     default: false
+  gen_changelog:
+    type: boolean
+    description: "Generate the changelog"
+    default: true
 steps:
   - run:
       name: Bump version
@@ -43,4 +47,5 @@ steps:
         CUSTOM_PARAMS: << parameters.params >>
         DRY_RUN: << parameters.dry_run >>
         VERBOSE: << parameters.verbose >>
+        GEN_CHANGELOG: << parameters.gen_changelog >>
       command: << include(scripts/bash/track-bump.sh) >>

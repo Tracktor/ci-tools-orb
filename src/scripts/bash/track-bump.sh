@@ -10,6 +10,12 @@ if [ "$DRY_RUN" -eq "1" ]; then
   _DRY_RUN="true"
 fi
 
+_GEN_CHANGELOG="false"
+# shellcheck disable=SC2153
+if [ "$GEN_CHANGELOG" -eq "1" ]; then
+  _GEN_CHANGELOG="true"
+fi
+
 _VERBOSE=
 # shellcheck disable=SC2153
 if [ "$VERBOSE" -eq "1" ]; then
@@ -37,6 +43,17 @@ cmd+=" bump --branch $_branch"
 eval "$cmd"
 
 TAG=$(git tag -l --sort=-version:refname  | head -n 1)
+
+if [ "$_GEN_CHANGELOG" = "true" ]; then
+  echo "Generating CHANGELOG"
+  pipx run git-cliff -o CHANGELOG.md --latest
+  # Remove last line
+  sed -i '$ d' CHANGELOG.md
+  git add CHANGELOG.md
+  git commit --amend --no-edit
+else
+  echo "Not generating CHANGELOG"
+fi
 
 if [ "$_DRY_RUN" = "false" ]; then
   echo "Pushing branch $_branch and tag $TAG"
