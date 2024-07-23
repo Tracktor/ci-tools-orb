@@ -155,7 +155,8 @@ jobs:
     steps:
       - checkout:
           path: ~/ci-tools-orb
-      - ci-tools/load-docker-tag
+      - ci-tools/load-docker-tag:
+          fail_no_tag: false
 
 workflows:
   test-deploy:

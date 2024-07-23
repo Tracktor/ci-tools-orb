@@ -1,9 +1,15 @@
 description: >
   Load the LATEST_DOCKER_TAG into an environment variable depending on the branch
 
-
+parameters:
+  fail_no_tag:
+    type: boolean
+    default: true
+    description: "Fail if the tag is not found"
 
 steps:
   - run:
       name: Loading LATEST_DOCKER_TAG
+      environment:
+          FAIL_NO_TAG: << parameters.fail_no_tag >>
       command: << include(scripts/docker/export-docker-tag.sh) >>
