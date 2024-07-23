@@ -1,20 +1,9 @@
 description: >
   Load the LATEST_DOCKER_TAG into an environment variable depending on the branch
 
-parameters:
-  default_branch:
-    type: string
-    default: "main"
-    description: "Branch to use to bump the tag"
-  branch:
-    type: string
-    default: ""
-    description: "Branch to get the version from"
+
 
 steps:
   - run:
       name: Loading LATEST_DOCKER_TAG
-      environment:
-        DEFAULT_BRANCH: << parameters.default_branch >>
-        BRANCH: << parameters.branch >>
       command: << include(scripts/docker/export-docker-tag.sh) >>

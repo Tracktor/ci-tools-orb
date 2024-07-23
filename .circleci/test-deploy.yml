@@ -155,9 +155,7 @@ jobs:
     steps:
       - checkout:
           path: ~/ci-tools-orb
-      - ci-tools/load-docker-tag:
-          default_branch: "main"
-          branch: "main"
+      - ci-tools/load-docker-tag
 
 workflows:
   test-deploy:
