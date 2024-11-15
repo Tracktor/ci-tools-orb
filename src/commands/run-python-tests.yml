@@ -22,7 +22,7 @@ parameters:
     description: "Skip formatting"
     type: boolean
     default: false
-  skip-check-types:
+  skip-typecheck:
     description: "Skip checking types"
     type: boolean
     default: false
@@ -73,7 +73,7 @@ steps:
                     command: poetry run ruff format --check .
   - when:
       condition:
-          not: << parameters.skip-check-types >>
+          not: << parameters.skip-typecheck >>
       steps:
         - run:
             name: Checking types
