@@ -18,6 +18,14 @@ parameters:
     description: "Skip linting"
     type: boolean
     default: false
+  skip-format:
+    description: "Skip formatting"
+    type: boolean
+    default: false
+  skip-check-types:
+    description: "Skip checking types"
+    type: boolean
+    default: false
   formatter:
     description: "Library used to check format"
     type: enum
@@ -46,22 +54,30 @@ steps:
             name: Running lint
             command: poetry run ruff check .
   - when:
-      condition:
-        equal: [ black, << parameters.formatter >> ]
-      steps:
-        - run:
-            name: Checking format
-            command: poetry run black --check .
+        condition:
+            not: << parameters.skip-format >>
+        steps:
+          - when:
+              condition:
+                equal: [ black, << parameters.formatter >> ]
+              steps:
+                - run:
+                    name: Checking format
+                    command: poetry run black --check .
+          - when:
+              condition:
+                equal: [ ruff, << parameters.formatter >> ]
+              steps:
+                - run:
+                    name: Checking format
+                    command: poetry run ruff format --check .
   - when:
       condition:
-        equal: [ ruff, << parameters.formatter >> ]
+          not: << parameters.skip-check-types >>
       steps:
         - run:
-            name: Checking format
-            command: poetry run ruff format --check .
-  - run:
-      name: Checking types
-      command: poetry run pyright
+            name: Checking types
+            command: poetry run pyright
   - run:
       name: Running tests
       command: << include(scripts/python/python-tests.sh) >>
