@@ -84,7 +84,9 @@ steps:
             command: poetry run pyright
   - run:
       name: Running tests
-      command: << include(scripts/python/python-tests.sh) >> << parameters.tests-extras >>
+      command: << include(scripts/python/python-tests.sh) >>
+      environment:
+        EXTRA_PARAMS: << parameters.tests-extras >>
   - store_test_results:
       path: tests
   - store_artifacts:
