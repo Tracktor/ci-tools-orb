@@ -6,6 +6,10 @@ parameters:
     description: "Poetry install extra parameters"
     default: "--no-ansi"
     type: string
+  tests-extras:
+    description: "Extra parameters for running tests"
+    default: ""
+    type: string
   before-steps:
     description: "Steps that will be executed before dependencies are installed"
     type: steps
@@ -80,7 +84,7 @@ steps:
             command: poetry run pyright
   - run:
       name: Running tests
-      command: << include(scripts/python/python-tests.sh) >>
+      command: << include(scripts/python/python-tests.sh) >> << parameters.tests-extras >>
   - store_test_results:
       path: tests
   - store_artifacts:
