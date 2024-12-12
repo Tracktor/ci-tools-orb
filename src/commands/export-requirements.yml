@@ -4,10 +4,11 @@ description: >
 parameters:
   tool:
     description: "The tool to use for exporting requirements"
-    default: poetry
+    default: "poetry"
+    type: string
     enum:
-      - poetry
-      - uv
+      - "poetry"
+      - "uv"
   extras:
     default: ""
     type: string
