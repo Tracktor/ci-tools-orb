@@ -1,5 +1,5 @@
 description: >
-  Using a pyproject.toml file and poetry, runs pyright then pytest with coverage
+  Using a pyproject.toml file, runs formatting, pyright then pytest with coverage
 
 parameters:
   extras:

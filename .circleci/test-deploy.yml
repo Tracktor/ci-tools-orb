@@ -44,7 +44,7 @@ jobs:
           tool: "uv"
       - ci-tools/export-requirements:
           tool: "uv"
-          extras: "--without-hashes"
+          extras: "--no-hashes"
       - ci-tools/load-version
       - ci-tools/run-python-tests:
           tool: "uv"
