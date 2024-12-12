@@ -21,7 +21,7 @@ jobs:
           path: ~/ci-tools-orb
       - ci-tools/export-requirements:
           tool: "poetry"
-      - ci-tools/export-poetry:
+      - ci-tools/export-requirements:
           tool: "poetry"
           extras: "--without-hashes"
       - ci-tools/load-version
@@ -42,7 +42,7 @@ jobs:
           path: ~/ci-tools-orb
       - ci-tools/export-requirements:
           tool: "uv"
-      - ci-tools/export-poetry:
+      - ci-tools/export-requirements:
           tool: "uv"
           extras: "--without-hashes"
       - ci-tools/load-version
