@@ -4,7 +4,7 @@ description: >
 parameters:
   extras:
     description: "Package install extra parameters"
-    default: "--no-ansi"
+    default: ""
     type: string
   tests-extras:
     description: "Extra parameters for running tests"
