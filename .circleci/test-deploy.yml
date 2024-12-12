@@ -19,12 +19,37 @@ jobs:
     steps:
       - checkout:
           path: ~/ci-tools-orb
-      - ci-tools/export-poetry
-      - ci-tools/export-poetry:
+      - ci-tools/export-requirements:
+          tool: "poetry"
+      - ci-tools/export-requirements:
+          tool: "poetry"
           extras: "--without-hashes"
-      - ci-tools/load-poetry-version
-      - ci-tools/run-python-tests
+      - ci-tools/load-version
       - ci-tools/run-python-tests:
+          tool: "poetry"
+      - ci-tools/run-python-tests:
+          formatter: "ruff"
+          tool: "poetry"
+
+  test-python-uv-commands:
+    docker:
+      - image: tracktor/python-ci:3.12.8-node
+        environment:
+          PYRIGHT_PYTHON_GLOBAL_NODE: true
+    working_directory: ~/ci-tools-orb/projects/python-uv
+    steps:
+      - checkout:
+          path: ~/ci-tools-orb
+      - ci-tools/export-requirements:
+          tool: "uv"
+      - ci-tools/export-requirements:
+          tool: "uv"
+          extras: "--no-hashes"
+      - ci-tools/load-version
+      - ci-tools/run-python-tests:
+          tool: "uv"
+      - ci-tools/run-python-tests:
+          tool: "uv"
           formatter: "ruff"
 
   test-docker-commands:
@@ -164,6 +189,8 @@ workflows:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       - test-python-commands:
           filters: *filters
+      - test-python-uv-commands:
+          filters: *filters
       - test-docker-commands:
           filters: *filters
       - test-js-commands:
@@ -189,6 +216,7 @@ workflows:
           requires:
             - orb-tools/pack
             - test-python-commands
+            - test-python-uv-commands
             - test-docker-commands
             - test-js-commands
             - test-bump-version-js

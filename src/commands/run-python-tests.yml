@@ -1,10 +1,10 @@
 description: >
-  Using a pyproject.toml file and poetry, runs pyright then pytest with coverage
+  Using a pyproject.toml file, runs formatting, pyright then pytest with coverage
 
 parameters:
   extras:
-    description: "Poetry install extra parameters"
-    default: "--no-ansi"
+    description: "Package install extra parameters"
+    default: ""
     type: string
   tests-extras:
     description: "Extra parameters for running tests"
@@ -33,30 +33,64 @@ parameters:
   formatter:
     description: "Library used to check format"
     type: enum
-    default: black
+    default: ruff
     enum:
       - black
       - ruff
+  tool:
+    description: "The tool to use for running tests"
+    default: "poetry"
+    type: string
+    enum:
+      - "poetry"
+      - "uv"
 
 steps:
-  - restore_cache:
-      keys:
-        - deps-<< parameters.cache-version >>-{{ checksum "poetry.lock" }}
-  - run:
-      name: Install orb dependencies
-      command: poetry install << parameters.extras >>
-  - save_cache:
-      key: deps-<< parameters.cache-version >>-{{ checksum "poetry.lock" }}
-      paths:
-        - /home/circleci/.cache/pypoetry/virtualenvs
+  - when:
+      condition:
+        equal: [ poetry, << parameters.tool >> ]
+      steps:
+        - restore_cache:
+            keys:
+              - deps-<< parameters.cache-version >>-{{ checksum "poetry.lock" }}
+        - run:
+            name: Install dependencies
+            command: poetry install << parameters.extras >>
+        - save_cache:
+            key: deps-<< parameters.cache-version >>-{{ checksum "poetry.lock" }}
+            paths:
+              - /home/circleci/.cache/pypoetry/virtualenvs
+  - when:
+      condition:
+        equal: [ uv, << parameters.tool >> ]
+      steps:
+        - restore_cache:
+            keys:
+              - deps-<< parameters.cache-version >>-{{ checksum "uv.lock" }}
+        - run:
+            name: Install dependencies
+            command: uv venv
+            # uv pip sync << parameters.extras >>
+        - save_cache:
+            key: deps-<< parameters.cache-version >>-{{ checksum "uv.lock" }}
+            paths:
+              - /home/circleci/.cache/uv
+
+
   - steps: << parameters.before-steps >>
+
   - when:
       condition:
         not: << parameters.skip-lint >>
       steps:
         - run:
             name: Running lint
-            command: poetry run ruff check .
+            command: |
+              if [[ "<< parameters.tool >>" == "poetry" ]]; then
+                poetry run ruff check .
+              else
+                 uv run ruff check .
+              fi
   - when:
         condition:
             not: << parameters.skip-format >>
@@ -67,25 +101,41 @@ steps:
               steps:
                 - run:
                     name: Checking format
-                    command: poetry run black --check .
+                    command: |
+                        if [[ "<< parameters.tool >>" == "poetry" ]]; then
+                          poetry run black --check .
+                        else
+                           uv run black --check .
+                        fi
           - when:
               condition:
                 equal: [ ruff, << parameters.formatter >> ]
               steps:
                 - run:
                     name: Checking format
-                    command: poetry run ruff format --check .
+                    command: |
+                        if [[ "<< parameters.tool >>" == "poetry" ]]; then
+                          poetry run ruff format --check .
+                        else
+                           uv run ruff format --check .
+                        fi
   - when:
       condition:
           not: << parameters.skip-typecheck >>
       steps:
         - run:
             name: Checking types
-            command: poetry run pyright
+            command: |
+              if [[ "<< parameters.tool >>" == "poetry" ]]; then
+                poetry run pyright
+              else
+                 uv run pyright
+              fi
   - run:
       name: Running tests
       command: << include(scripts/python/python-tests.sh) >>
       environment:
+        TOOL: << parameters.tool >>
         EXTRA_PARAMS: << parameters.tests-extras >>
   - store_test_results:
       path: tests
