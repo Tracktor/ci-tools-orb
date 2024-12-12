@@ -69,9 +69,8 @@ steps:
               - deps-<< parameters.cache-version >>-{{ checksum "uv.lock" }}
         - run:
             name: Install dependencies
-            command: |
-              uv venv
-              uv pip sync << parameters.extras >>
+            command: uv venv
+            # uv pip sync << parameters.extras >>
         - save_cache:
             key: deps-<< parameters.cache-version >>-{{ checksum "uv.lock" }}
             paths:
