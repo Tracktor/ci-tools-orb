@@ -12,3 +12,17 @@ dev = [
     "pytest-cov>=6.0.0",
     "ruff>=0.8.2",
 ]
+
+[tool.pyright]
+include = []
+exclude = []
+
+pythonVersion = "3.12"
+pythonPlatform = "Linux"
+
+[tool.pytest.ini_options]
+addopts = "--cov=orb -s -q -x"
+testpaths = [
+    "tests"
+]
+python_files = "*.py"
