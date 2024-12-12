@@ -21,10 +21,11 @@ jobs:
           path: ~/ci-tools-orb
       - ci-tools/export-requirements:
           tool: "poetry"
+          persist_to_workspace: false
       - ci-tools/export-requirements:
           tool: "poetry"
+          persist_to_workspace: false
           extras: "--without-hashes"
-      - ci-tools/load-version
       - ci-tools/run-python-tests:
           tool: "poetry"
       - ci-tools/run-python-tests:
