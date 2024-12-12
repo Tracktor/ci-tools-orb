@@ -19,12 +19,37 @@ jobs:
     steps:
       - checkout:
           path: ~/ci-tools-orb
-      - ci-tools/export-poetry
+      - ci-tools/export-requirements:
+          tool: "poetry"
       - ci-tools/export-poetry:
+          tool: "poetry"
           extras: "--without-hashes"
-      - ci-tools/load-poetry-version
-      - ci-tools/run-python-tests
+      - ci-tools/load-version
       - ci-tools/run-python-tests:
+          tool: "poetry"
+      - ci-tools/run-python-tests:
+          formatter: "ruff"
+          tool: "poetry"
+
+  test-python-uv-commands:
+    docker:
+      - image: cimg/python:3.12.1-node
+        environment:
+          PYRIGHT_PYTHON_GLOBAL_NODE: true
+    working_directory: ~/ci-tools-orb/projects/python-uv
+    steps:
+      - checkout:
+          path: ~/ci-tools-orb
+      - ci-tools/export-requirements:
+          tool: "uv"
+      - ci-tools/export-poetry:
+          tool: "uv"
+          extras: "--without-hashes"
+      - ci-tools/load-version
+      - ci-tools/run-python-tests:
+          tool: "uv"
+      - ci-tools/run-python-tests:
+          tool: "uv"
           formatter: "ruff"
 
   test-docker-commands:

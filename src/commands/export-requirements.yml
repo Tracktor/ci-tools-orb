@@ -1,0 +1,29 @@
+description: >
+  Export the requirements and the version number from a pyproject.toml file
+
+parameters:
+  tool:
+    description: "The tool to use for exporting requirements"
+    default: poetry
+    enum:
+      - poetry
+      - uv
+  extras:
+    default: ""
+    type: string
+    description: "Extra parameters to pass to export (for instance '--without-hashes')"
+
+steps:
+  - run:
+      name: Export requirements and .version from pyproject.yml
+      environment:
+        TOOL: << parameters.tool >>
+        EXTRA_PARAMS: << parameters.extras >>
+      command: << include(scripts/python/requirements-export.sh) >>
+
+
+  - persist_to_workspace:
+      root: .
+      paths:
+        - ./requirements.txt
+        - ./.version
