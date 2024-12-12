@@ -189,6 +189,8 @@ workflows:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       - test-python-commands:
           filters: *filters
+      - test-python-uv-commands:
+          filters: *filters
       - test-docker-commands:
           filters: *filters
       - test-js-commands:
@@ -214,6 +216,7 @@ workflows:
           requires:
             - orb-tools/pack
             - test-python-commands
+            - test-python-uv-commands
             - test-docker-commands
             - test-js-commands
             - test-bump-version-js
