@@ -18,10 +18,10 @@ function run_poetry(){
 
 function run_uv(){
   if [[ "${EXTRA_PARAMS}" == "" ]]; then
-    uv run -vv --junitxml=tests/junit.xml
+    uv run pytest -vv --junitxml=tests/junit.xml
   else
     # shellcheck disable=SC2086
-    uv run -vv --junitxml=tests/junit.xml ${EXTRA_PARAMS}
+    uv run pytest -vv --junitxml=tests/junit.xml ${EXTRA_PARAMS}
   fi
 
   uv run coverage html
