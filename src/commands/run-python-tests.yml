@@ -39,10 +39,11 @@ parameters:
       - ruff
   tool:
     description: "The tool to use for running tests"
-    default: poetry
+    default: "poetry"
+    type: string
     enum:
-      - poetry
-      - uv
+      - "poetry"
+      - "uv"
 
 steps:
   - when:
