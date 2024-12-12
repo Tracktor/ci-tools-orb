@@ -129,7 +129,7 @@ steps:
               if [[ "<< parameters.tool >>" == "poetry" ]]; then
                 poetry run pyright
               else
-                 uv run run pyright
+                 uv run pyright
               fi
   - run:
       name: Running tests
