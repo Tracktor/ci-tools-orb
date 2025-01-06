@@ -17,13 +17,23 @@ set -euo pipefail
 #   - BUILD: Set to false to skip build step (default: true)
 #   - SIGN_COMMIT: Set to true to enable GPG signing (default: false)
 
+# Convert boolean/numeric environment variables to true/false
+function to_boolean() {
+    local value="${1:-}"
+    case "$value" in
+        true|1|yes|y) echo "true" ;;
+        *) echo "false" ;;
+    esac
+}
+
 # Default configuration
 declare -r BRANCH="${BRANCH:-main}"
 declare -r TOOL="${TOOL:-poetry}"
 declare -r LANG_TYPE="${LANG_TYPE:-}"
-declare -r _DRY_RUN="${DRY_RUN:-false}"
-declare -r _BUILD="${BUILD:-true}"
-declare -r _SIGN_COMMIT="${SIGN_COMMIT:-false}"
+declare -r _DRY_RUN="$(to_boolean "${DRY_RUN:-false}")"
+declare -r _BUILD="$(to_boolean "${BUILD:-true}")"
+declare -r _SIGN_COMMIT="$(to_boolean "${SIGN_COMMIT:-false}")"
+
 
 function log() {
     echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')] $*"
