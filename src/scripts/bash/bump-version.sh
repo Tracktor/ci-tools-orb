@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -xeuo pipefail
+set -euo pipefail
 
 # Utility script to bump the version and push to git based on commit messages.
 # Updates the CHANGELOG.md file.
