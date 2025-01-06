@@ -71,7 +71,9 @@ function check_requirements() {
         command -v commitizen >/dev/null 2>&1 || fail "commitizen is required but not installed"
     fi
 
-    command -v gh >/dev/null 2>&1 || fail "gh CLI is required but not installed"
+    if [[ "$_DRY_RUN" == "true"  ]]; then
+      command -v gh >/dev/null 2>&1 || fail "gh CLI is required but not installed"
+    fi
 }
 
 function git_init() {
