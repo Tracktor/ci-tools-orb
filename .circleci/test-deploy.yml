@@ -222,11 +222,13 @@ workflows:
           filters: *filters
       - test-bump-version-js:
           filters: *filters
-      - test-bump-version-python:
+      - test-bump-version-python-poetry:
           filters: *filters
       - test-bump-version-python-no-build:
           filters: *filters
-      - test-bump-version-python-no-poetry:
+      - test-bump-version-python-default:
+          filters: *filters
+      - test-bump-version-python-uv:
           filters: *filters
       - test-python-track-bump:
           filters: *filters
@@ -245,9 +247,10 @@ workflows:
             - test-docker-commands
             - test-js-commands
             - test-bump-version-js
-            - test-bump-version-python
-            - test-bump-version-python-no-poetry
+            - test-bump-version-python-poetry
+            - test-bump-version-python-default
             - test-bump-version-python-no-build
+            - test-bump-version-python-uv
             - test-python-track-bump
             - test-docker-tag
           context: orb-publishing
