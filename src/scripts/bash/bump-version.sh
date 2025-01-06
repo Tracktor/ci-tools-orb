@@ -68,7 +68,7 @@ function check_requirements() {
 
     # Check for commitizen if using Python
     if [[ "$LANG_TYPE" == "python" && "$TOOL" == "default" ]]; then
-        command -v commitizen >/dev/null 2>&1 || fail "commitizen is required but not installed"
+        command -v cz >/dev/null 2>&1 || fail "commitizen is required but not installed"
     fi
 
     if [[ "$_DRY_RUN" == "true"  ]]; then
