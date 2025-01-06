@@ -7,10 +7,12 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-    "commitizen>=4.1.0",
     "pyright>=1.1.390",
     "pytest-cov>=6.0.0",
     "ruff>=0.8.2",
+]
+bump = [
+    "commitizen>=4.1.0",
 ]
 
 [tool.pyright]
@@ -26,3 +28,13 @@ testpaths = [
     "tests"
 ]
 python_files = "*.py"
+
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+tag_format = "$version"
+version_files = [
+    "pyproject.toml:version"
+]
+bump_message = "release $current_version → $new_version [skip ci]"
