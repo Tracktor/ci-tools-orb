@@ -138,12 +138,6 @@ jobs:
           lang: "python"
           dry_run: true
           build: false
-      - ci-tools/bump-version:
-          branch: "main"
-          lang: "python"
-          dry_run: true
-          tool: "uv"
-          build: false
 
   test-bump-version-python-default:
     docker:
