@@ -181,6 +181,7 @@ jobs:
           branch: "main"
           lang: "js"
           dry_run: true
+          tool: "npm"
 
   test-python-track-bump:
     docker:
