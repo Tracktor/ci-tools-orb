@@ -126,7 +126,7 @@ function bump_push_python() {
     case "$TOOL" in
         poetry) bump_command="poetry run $bump_command" ;;
         uv) bump_command="uv run $bump_command" ;;
-        default|*) bump_command="$bump_command" ;;
+        default|*)  ;;
     esac
 
     if ! $bump_command; then
