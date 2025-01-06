@@ -23,10 +23,15 @@ parameters:
     type: boolean
     description: "Do not commit or push the changes"
     default: false
-  use_poetry:
-    type: boolean
-    description: "Use poetry to bump the version (python only)"
-    default: true
+  tool:
+    description: "Tool to use for bumping the version"
+    default: "poetry"
+    type: string
+    enum:
+      - "poetry"
+      - "uv"
+      - "npm"
+      - "yarn"
   build:
     type: boolean
     description: "Build the project after bumping the version (python only)"
@@ -42,7 +47,7 @@ steps:
         LANG_TYPE: << parameters.lang >>
         BRANCH: << parameters.branch >>
         DRY_RUN: << parameters.dry_run >>
-        USE_POETRY: << parameters.use_poetry >>
+        TOOL: << parameters.tool >>
         BUILD: << parameters.build >>
         SIGN_COMMIT: << parameters.sign >>
       command: << include(scripts/bash/bump-version.sh) >>
