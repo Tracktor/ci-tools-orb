@@ -200,8 +200,10 @@ version = "0.1.0"
 source = { virtual = "." }
 
 [package.dev-dependencies]
-dev = [
+bump = [
     { name = "commitizen" },
+]
+dev = [
     { name = "pyright" },
     { name = "pytest-cov" },
     { name = "ruff" },
@@ -210,8 +212,8 @@ dev = [
 [package.metadata]
 
 [package.metadata.requires-dev]
+bump = [{ name = "commitizen", specifier = ">=4.1.0" }]
 dev = [
-    { name = "commitizen", specifier = ">=4.1.0" },
     { name = "pyright", specifier = ">=1.1.390" },
     { name = "pytest-cov", specifier = ">=6.0.0" },
     { name = "ruff", specifier = ">=0.8.2" },

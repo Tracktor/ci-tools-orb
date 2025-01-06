@@ -125,7 +125,7 @@ function bump_push_python() {
     local bump_command="cz bump --yes"
     case "$TOOL" in
         poetry) bump_command="poetry run $bump_command" ;;
-        uv) bump_command="uv run $bump_command" ;;
+        uv) bump_command="uv run --only-group=bump $bump_command" ;;
         default|*)  ;;
     esac
 
