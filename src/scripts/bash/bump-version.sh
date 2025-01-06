@@ -71,7 +71,7 @@ function check_requirements() {
         command -v cz >/dev/null 2>&1 || fail "commitizen is required but not installed"
     fi
 
-    if [[ "$_DRY_RUN" == "true"  ]]; then
+    if [[ "$_DRY_RUN" == "false"  ]]; then
       command -v gh >/dev/null 2>&1 || fail "gh CLI is required but not installed"
     fi
 }
