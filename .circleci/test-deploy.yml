@@ -157,6 +157,7 @@ jobs:
           lang: "python"
           dry_run: true
           tool: "default"
+          build: false
 
   test-bump-version-js:
     docker:
