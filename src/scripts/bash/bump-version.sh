@@ -27,13 +27,14 @@ function to_boolean() {
 }
 
 # Default configuration
-declare -r BRANCH="${BRANCH:-main}"
-declare -r TOOL="${TOOL:-poetry}"
-declare -r LANG_TYPE="${LANG_TYPE:-}"
-declare -r _DRY_RUN="$(to_boolean "${DRY_RUN:-false}")"
-declare -r _BUILD="$(to_boolean "${BUILD:-true}")"
-declare -r _SIGN_COMMIT="$(to_boolean "${SIGN_COMMIT:-false}")"
+declare -r BRANCH TOOL LANG_TYPE _DRY_RUN _BUILD _SIGN_COMMIT
 
+BRANCH="${BRANCH:-main}"
+TOOL="${TOOL:-poetry}"
+LANG_TYPE="${LANG_TYPE:-}"
+_DRY_RUN="$(to_boolean "${DRY_RUN:-false}")"
+_BUILD="$(to_boolean "${BUILD:-true}")"
+_SIGN_COMMIT="$(to_boolean "${SIGN_COMMIT:-false}")"
 
 function log() {
     echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')] $*"
