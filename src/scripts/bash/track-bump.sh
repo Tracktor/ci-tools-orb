@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -exuo pipefail
 
 # shellcheck source=../utils.sh
 source "$(dirname "$0")/utils.sh"
