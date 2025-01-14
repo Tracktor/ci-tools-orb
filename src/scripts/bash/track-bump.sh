@@ -36,12 +36,12 @@ cmd+=" bump --branch $_branch"
 [ -n "$_flags" ] && cmd+=" $_flags"
 [ -n "$CUSTOM_PARAMS" ] && cmd+=" $CUSTOM_PARAMS"
 
-# Execute the command
+# Run track bump
 eval "$cmd"
 
 if [ "$_CREATE_RELEASE" = "true" ] && [ "$_DRY_RUN" = "false" ]; then
   echo "Generating CHANGELOG"
-  pipx run git-cliff -o CHANGELOG.md --latest
+  pipx run git-cliff -o CHANGELOG.md --latest --tag-pattern "^v\d+\.\d+\.\d+$"
   sed -i '$ d' CHANGELOG.md
   git add CHANGELOG.md
   git commit --amend --no-edit
