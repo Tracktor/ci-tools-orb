@@ -34,6 +34,10 @@ parameters:
     type: boolean
     description: "Print the commands executed"
     default: false
+  track_bump_version:
+    type: string
+    description: "Version of the track-bump library"
+    default: "latest"
 steps:
   - run:
       name: Bump version
@@ -44,4 +48,5 @@ steps:
         CUSTOM_PARAMS: << parameters.params >>
         DRY_RUN: << parameters.dry_run >>
         VERBOSE: << parameters.verbose >>
+        TRACK_BUMP_VERSION: << parameters.track_bump_version >>
       command: << include(scripts/bash/track-bump.sh) >>

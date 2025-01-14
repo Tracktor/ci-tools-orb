@@ -17,14 +17,7 @@ set -euo pipefail
 #   - BUILD: Set to false to skip build step (default: true)
 #   - SIGN_COMMIT: Set to true to enable GPG signing (default: false)
 
-# Convert boolean/numeric environment variables to true/false
-function to_boolean() {
-    local value="${1:-}"
-    case "$value" in
-        true|1|yes|y) echo "true" ;;
-        *) echo "false" ;;
-    esac
-}
+source "$(dirname "$0")/utils.sh"
 
 # Initialize variables
 BRANCH="${BRANCH:-main}"
