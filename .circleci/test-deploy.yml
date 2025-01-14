@@ -161,7 +161,7 @@ jobs:
 
   test-bump-version-js:
     docker:
-      - image: cimg/node:18.20.4
+      - image: cimg/node:23.6.0
     working_directory: ~/ci-tools-orb/projects/js
     environment:
       CI_EMAIL: "test@test.test"
