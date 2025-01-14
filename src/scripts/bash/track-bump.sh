@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-set -exuo pipefail
+set -euo pipefail
 
 # shellcheck source=../utils.sh
+# shellcheck disable=SC1091
 source "$(dirname "$0")/utils.sh"
+
 
 # Initialize variables
 

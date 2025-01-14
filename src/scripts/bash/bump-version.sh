@@ -18,6 +18,7 @@ set -exuo pipefail
 #   - SIGN_COMMIT: Set to true to enable GPG signing (default: false)
 
 # shellcheck source=../utils.sh
+# shellcheck disable=SC1091
 source "$(dirname "$0")/utils.sh"
 
 # Initialize variables
