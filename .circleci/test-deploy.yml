@@ -74,7 +74,7 @@ jobs:
 
   test-js-commands:
     docker:
-      - image: cimg/node:18.20.4
+      - image: cimg/node:23.6.0
     working_directory: ~/ci-tools-orb/projects/js
     steps:
       - checkout:
