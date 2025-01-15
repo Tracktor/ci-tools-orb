@@ -3,16 +3,15 @@
 set -e
 
 TOOL=${TOOL:-poetry}
-EXTRA_PARAMS=${EXTRA_PARAMS:-}
 
 function export_poetry() {
   poetry version -s > .version
   if [[ "${EXTRA_PARAMS}" == "" ]]; then
       # shellcheck disable=SC2094
-      poetry export -f requirements.txt > requirements.txt
+      poetry export -f requirements.txt --output requirements.txt
   else
       # shellcheck disable=SC2094 disable=SC2086
-      poetry export -f requirements.txt $EXTRA_PARAMS > requirements.txt
+      poetry export -f requirements.txt --output requirements.txt ${EXTRA_PARAMS}
   fi
 }
 
