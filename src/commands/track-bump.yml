@@ -10,10 +10,10 @@ parameters:
     type: string
     default: "main"
     description: "Default branch"
-  ci_user_email:
+  ci_email:
     type: env_var_name
     description: "Email to use for the git commit"
-    default: CI_USER_EMAIL
+    default: CI_EMAIL
   ci_user:
     type: env_var_name
     description: "User to use for the git commit"

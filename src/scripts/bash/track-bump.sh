@@ -34,6 +34,8 @@ _TRACK_BUMP="uvx track-bump@$_TRACK_BUMP_VERSION"
 [[ -z "${CI_USER:-}" ]] && fail "CI_USER is not set"
 [[ -z "${CI_EMAIL:-}" ]] && fail "CI_EMAIL is not set"
 
+export CI_USER_EMAIL=$CI_EMAIL
+
 
 # Build the command array
 cmd_args=("$_TRACK_BUMP")
