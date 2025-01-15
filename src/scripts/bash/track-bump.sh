@@ -29,7 +29,6 @@ _DRY_RUN="$(to_boolean "${DRY_RUN:-false}")"
 _BUILD="$(to_boolean "${BUILD:-true}")"
 _CREATE_RELEASE="$(to_boolean "${CREATE_RELEASE:-false}")"
 _TRACK_BUMP_VERSION="${TRACK_BUMP_VERSION:-latest}"
-_TRACK_BUMP="uvx track-bump@$_TRACK_BUMP_VERSION"
 
 [[ -z "${CI_USER:-}" ]] && fail "CI_USER is not set"
 [[ -z "${CI_EMAIL:-}" ]] && fail "CI_EMAIL is not set"
@@ -38,7 +37,7 @@ export CI_USER_EMAIL=$CI_EMAIL
 
 
 # Build the command array
-cmd_args=("$_TRACK_BUMP")
+cmd_args=("uvx" "track-bump@$_TRACK_BUMP_VERSION")
 
 if [ "${VERBOSE:-0}" = "1" ]; then
     cmd_args+=("-vv")
@@ -73,7 +72,7 @@ else
 fi
 
 # Get the latest tag
-TAG=$($_TRACK_BUMP get-latest-tag --branch "$_BRANCH")
+TAG=$(uvx track-bump@"$_TRACK_BUMP_VERSION" get-latest-tag --branch "$_BRANCH")
 if [ -z "$TAG" ]; then
     echo "Error: Failed to get latest tag" >&2
     exit 1
