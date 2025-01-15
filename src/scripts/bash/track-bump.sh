@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -xeuo pipefail
 
 # Convert boolean/numeric environment variables to true/false
 function to_boolean() {
