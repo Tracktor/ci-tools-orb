@@ -11,6 +11,13 @@ function to_boolean() {
     esac
 }
 
+
+function fail() {
+    log "ERROR: $*"
+    exit 1
+}
+
+
 # Initialize variables
 
 _BRANCH="${BRANCH:-$(git branch --show-current)}"
