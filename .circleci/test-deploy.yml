@@ -12,7 +12,7 @@ filters: &filters
 jobs:
   test-python-commands:
     docker:
-      - image: cimg/python:3.12.1-node
+      - image: tracktor/python-ci:3.12.8-node
         environment:
           PYRIGHT_PYTHON_GLOBAL_NODE: true
     working_directory: ~/ci-tools-orb/projects/python-poetry
@@ -86,7 +86,7 @@ jobs:
 
   test-bump-version-python-poetry:
     docker:
-      - image: cimg/python:3.12.1
+      - image: tracktor/python-ci:3.12.8-node
     working_directory: ~/ci-tools-orb/projects/python-poetry
     environment:
       CI_EMAIL: "test@test.test"
@@ -122,7 +122,7 @@ jobs:
 
   test-bump-version-python-no-build:
     docker:
-      - image: cimg/python:3.12.1
+      - image: tracktor/python-ci:3.12.8-node
     working_directory: ~/ci-tools-orb/projects/python-poetry
     environment:
       CI_EMAIL: "test@test.test"
@@ -141,7 +141,7 @@ jobs:
 
   test-bump-version-python-default:
     docker:
-      - image: cimg/python:3.12.1
+      - image: tracktor/python-ci:3.12.8-node
     working_directory: ~/ci-tools-orb/projects/python-default
     environment:
       CI_EMAIL: "test@test.test"
@@ -180,7 +180,7 @@ jobs:
 
   test-python-track-bump:
     docker:
-      - image: cimg/python:3.12.1
+      - image: tracktor/python-ci:3.12.8-node
     working_directory: ~/ci-tools-orb/projects/python-track-bump
     environment:
       CI_EMAIL: "test@test.test"
@@ -196,7 +196,7 @@ jobs:
 
   test-docker-tag:
     docker:
-      - image: cimg/python:3.12.1
+      - image: tracktor/python-ci:3.12.8-node
     working_directory: ~/ci-tools-orb/projects/python-track-bump
     steps:
       - checkout:
