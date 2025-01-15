@@ -10,10 +10,10 @@ parameters:
     type: string
     default: "main"
     description: "Default branch"
-  ci_user_email:
+  ci_email:
     type: env_var_name
     description: "Email to use for the git commit"
-    default: CI_USER_EMAIL
+    default: CI_EMAIL
   ci_user:
     type: env_var_name
     description: "User to use for the git commit"
@@ -34,6 +34,10 @@ parameters:
     type: boolean
     description: "Print the commands executed"
     default: false
+  track_bump_version:
+    type: string
+    description: "Version of the track-bump library"
+    default: "latest"
 steps:
   - run:
       name: Bump version
@@ -44,4 +48,5 @@ steps:
         CUSTOM_PARAMS: << parameters.params >>
         DRY_RUN: << parameters.dry_run >>
         VERBOSE: << parameters.verbose >>
+        TRACK_BUMP_VERSION: << parameters.track_bump_version >>
       command: << include(scripts/bash/track-bump.sh) >>
