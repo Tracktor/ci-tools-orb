@@ -9,6 +9,7 @@ function to_boolean() {
         true|1|yes|y) echo "true" ;;
         *) echo "false" ;;
     esac
+}
 
 # Initialize variables
 
