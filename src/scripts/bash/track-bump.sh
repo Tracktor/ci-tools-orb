@@ -2,10 +2,9 @@
 
 set -euo pipefail
 
-# shellcheck source=../utils.sh
+# shellcheck source=./utils.sh
 # shellcheck disable=SC1091
-source "$(dirname "$0")/utils.sh"
-
+source "./utils.sh"
 
 # Initialize variables
 
@@ -15,6 +14,10 @@ _BUILD="$(to_boolean "${BUILD:-true}")"
 _CREATE_RELEASE="$(to_boolean "${CREATE_RELEASE:-false}")"
 _TRACK_BUMP_VERSION="${TRACK_BUMP_VERSION:-latest}"
 _TRACK_BUMP="uvx track-bump@$_TRACK_BUMP_VERSION"
+
+[[ -z "${CI_USER:-}" ]] && fail "CI_USER is not set"
+[[ -z "${CI_EMAIL:-}" ]] && fail "CI_EMAIL is not set"
+
 
 # Build the command array
 cmd_args=("$_TRACK_BUMP")
