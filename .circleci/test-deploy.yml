@@ -183,7 +183,7 @@ jobs:
       - image: cimg/python:3.12.1
     working_directory: ~/ci-tools-orb/projects/python-track-bump
     environment:
-      CI_USER_EMAIL: "test@test.test"
+      CI_EMAIL: "test@test.test"
       CI_USER: "test"
     steps:
       - checkout:
