@@ -26,6 +26,16 @@ function to_boolean() {
     esac
 }
 
+function log() {
+    echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')] $*"
+}
+
+function fail() {
+    log "ERROR: $*"
+    exit 1
+}
+
+
 # Initialize variables
 BRANCH="${BRANCH:-main}"
 TOOL="${TOOL:-poetry}"
@@ -37,14 +47,6 @@ _SIGN_COMMIT="$(to_boolean "${SIGN_COMMIT:-false}")"
 # Make them readonly
 readonly BRANCH TOOL LANG_TYPE _DRY_RUN _BUILD _SIGN_COMMIT
 
-function log() {
-    echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')] $*"
-}
-
-function fail() {
-    log "ERROR: $*"
-    exit 1
-}
 
 function check_requirements() {
     # Check required environment variables

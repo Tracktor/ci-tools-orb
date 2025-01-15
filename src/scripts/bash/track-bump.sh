@@ -11,11 +11,15 @@ function to_boolean() {
     esac
 }
 
+function log() {
+    echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')] $*"
+}
 
 function fail() {
     log "ERROR: $*"
     exit 1
 }
+
 
 
 # Initialize variables
