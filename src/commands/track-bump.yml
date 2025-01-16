@@ -45,7 +45,7 @@ parameters:
   tag_pattern:
     type: string
     description: "Pattern to pass to git-cliff"
-  steps:
+  after_steps:
     type: steps
     default: []
     description: "Steps to run before pushing the changes"
@@ -66,8 +66,7 @@ steps:
       environment:
         TAG_PATTERN: << parameters.tag_pattern >>
       command: << include(scripts/bash/gen-changelog.sh) >>
-  - run:
-      steps: << parameters.steps >>
+  - steps: << parameters.after_steps >>
   - run:
       name: Push changes
       environment:
