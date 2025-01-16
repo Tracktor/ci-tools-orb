@@ -44,4 +44,4 @@ fi
 
 # shellcheck disable=SC2016
 echo 'export TAG="$TAG"' >> "$BASH_ENV"
-#echo "$TAG" > .tag
+echo "$TAG" > .tag

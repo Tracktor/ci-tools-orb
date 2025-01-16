@@ -76,9 +76,13 @@ steps:
               TAG_PATTERN: << parameters.tag-pattern >>
             command: << include(scripts/bash/gen-changelog.sh) >>
   - steps: << parameters.after-steps >>
-  - run:
-      name: Push changes
-      environment:
-        BRANCH: << parameters.branch >>
-        CREATE_RELEASE: << parameters.create-release >>
-      command: << include(scripts/bash/push-release.sh) >>
+  - when:
+      condition:
+        not: << parameters.dry-run >>
+      steps:
+        - run:
+            name: Push changes
+            environment:
+              BRANCH: << parameters.branch >>
+              CREATE_RELEASE: << parameters.create-release >>
+            command: << include(scripts/bash/push-release.sh) >>
