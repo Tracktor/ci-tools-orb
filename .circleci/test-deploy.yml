@@ -190,6 +190,7 @@ jobs:
           path: ~/ci-tools-orb
       - ci-tools/track-bump:
           dry-run: true
+          default-branch: "main"
           verbose: true
           branch: "main"
 
