@@ -40,7 +40,7 @@ parameters:
     default: "latest"
   create_release:
     type: boolean
-    description: "Release the version"
+    description: "Create a release on github"
     default: true
 
 steps:
@@ -54,5 +54,5 @@ steps:
         DRY_RUN: << parameters.dry_run >>
         VERBOSE: << parameters.verbose >>
         TRACK_BUMP_VERSION: << parameters.track_bump_version >>
-        CREATE_RELEASE: << parameters.release >>
+        CREATE_RELEASE: << parameters.create_release >>
       command: << include(scripts/bash/track-bump.sh) >>
