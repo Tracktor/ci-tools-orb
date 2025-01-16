@@ -92,36 +92,36 @@ steps:
                  uv run ruff check .
               fi
   - when:
-        condition:
-            not: << parameters.skip-format >>
-        steps:
-          - when:
-              condition:
-                equal: [ black, << parameters.formatter >> ]
-              steps:
-                - run:
-                    name: Checking format
-                    command: |
-                        if [[ "<< parameters.tool >>" == "poetry" ]]; then
-                          poetry run black --check .
-                        else
-                           uv run black --check .
-                        fi
-          - when:
-              condition:
-                equal: [ ruff, << parameters.formatter >> ]
-              steps:
-                - run:
-                    name: Checking format
-                    command: |
-                        if [[ "<< parameters.tool >>" == "poetry" ]]; then
-                          poetry run ruff format --check .
-                        else
-                           uv run ruff format --check .
-                        fi
+      condition:
+        not: << parameters.skip-format >>
+      steps:
+        - when:
+            condition:
+              equal: [ black, << parameters.formatter >> ]
+            steps:
+              - run:
+                  name: Checking format
+                  command: |
+                      if [[ "<< parameters.tool >>" == "poetry" ]]; then
+                        poetry run black --check .
+                      else
+                         uv run black --check .
+                      fi
+        - when:
+            condition:
+              equal: [ ruff, << parameters.formatter >> ]
+            steps:
+              - run:
+                  name: Checking format
+                  command: |
+                      if [[ "<< parameters.tool >>" == "poetry" ]]; then
+                        poetry run ruff format --check .
+                      else
+                         uv run ruff format --check .
+                      fi
   - when:
       condition:
-          not: << parameters.skip-typecheck >>
+        not: << parameters.skip-typecheck >>
       steps:
         - run:
             name: Checking types
