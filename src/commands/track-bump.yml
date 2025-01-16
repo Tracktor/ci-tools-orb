@@ -45,7 +45,6 @@ parameters:
   tag_pattern:
     type: string
     description: "Pattern to pass to git-cliff"
-    default: "^v\d+\.\d+\.\d+$"
   steps:
     type: steps
     default: []

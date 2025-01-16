@@ -11,5 +11,5 @@ steps:
   - run:
       name: Loading LATEST_DOCKER_TAG
       environment:
-          FAIL_NO_TAG: << parameters.fail_no_tag >>
+        FAIL_NO_TAG: << parameters.fail_no_tag >>
       command: << include(scripts/docker/export-docker-tag.sh) >>
