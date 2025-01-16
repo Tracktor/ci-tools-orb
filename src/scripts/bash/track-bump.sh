@@ -27,7 +27,7 @@ function fail() {
 _BRANCH="${BRANCH:-$(git branch --show-current)}"
 _DRY_RUN="$(to_boolean "${DRY_RUN:-false}")"
 _BUILD="$(to_boolean "${BUILD:-true}")"
-_CREATE_RELEASE="$(to_boolean "${CREATE_RELEASE:-false}")"
+_CREATE_RELEASE="$(to_boolean "${CREATE_RELEASE:-true}")"
 _TRACK_BUMP_VERSION="${TRACK_BUMP_VERSION:-latest}"
 
 [[ -z "${CI_USER:-}" ]] && fail "CI_USER is not set"

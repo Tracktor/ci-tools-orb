@@ -38,6 +38,11 @@ parameters:
     type: string
     description: "Version of the track-bump library"
     default: "latest"
+  create_release:
+    type: boolean
+    description: "Release the version"
+    default: true
+
 steps:
   - run:
       name: Bump version
@@ -49,4 +54,5 @@ steps:
         DRY_RUN: << parameters.dry_run >>
         VERBOSE: << parameters.verbose >>
         TRACK_BUMP_VERSION: << parameters.track_bump_version >>
+        CREATE_RELEASE: << parameters.release >>
       command: << include(scripts/bash/track-bump.sh) >>
