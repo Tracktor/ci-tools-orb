@@ -43,7 +43,7 @@ if [ "${VERBOSE:-0}" = "1" ]; then
     cmd_args+=("-vv")
 fi
 
-cmd_args+=("bump" "--branch" "$_BRANCH")
+cmd_args+=("bump" "--branch" "$_BRANCH" "--no-reset-git")
 
 if [ "${SIGN_COMMIT:-0}" = "1" ]; then
     cmd_args+=("--sign")
