@@ -10,8 +10,7 @@ fi
 
 _BRANCH="${BRANCH:-$(git branch --show-current)}"
 
-
-_CREATE_RELEASE="${CREATE_RELEASE:-true}"
+_CREATE_RELEASE="${CREATE_RELEASE:-0}"
 
 echo "Pushing branch $_BRANCH and tag $TAG"
 if ! git push origin "$_BRANCH" --tags; then
@@ -19,7 +18,7 @@ if ! git push origin "$_BRANCH" --tags; then
     exit 1
 fi
 
-if [ "$_CREATE_RELEASE" = "true" ]; then
+if [ "$_CREATE_RELEASE" = "1" ]; then
     echo "Creating Github release $TAG"
     if ! gh release create -F CHANGELOG.md "$TAG"; then
         echo "Error: Failed to create Github release" >&2
