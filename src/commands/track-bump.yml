@@ -68,13 +68,18 @@ steps:
       command: << include(scripts/bash/track-bump.sh) >>
   - when:
       condition:
-        not: << parameters.dry-run >>
+        not: << parameters.skip-changelog >>
       steps:
         - run:
             name: Generate changelog
             environment:
               TAG_PATTERN: << parameters.tag-pattern >>
             command: << include(scripts/bash/gen-changelog.sh) >>
+        - run:
+            name: Adding changelog
+            command: |
+              git add CHANGELOG.md
+              git commit --amend --no-edit
   - steps: << parameters.after-steps >>
   - when:
       condition:

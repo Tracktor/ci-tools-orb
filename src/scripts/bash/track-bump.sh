@@ -11,7 +11,6 @@ _TRACK_BUMP_VERSION="${TRACK_BUMP_VERSION:-latest}"
 export CI_USER_EMAIL=$CI_EMAIL
 
 
-
 # Build the command array
 cmd_args=("uvx" "track-bump@$_TRACK_BUMP_VERSION")
 

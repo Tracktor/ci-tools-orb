@@ -193,6 +193,7 @@ jobs:
           default-branch: "main"
           verbose: true
           branch: "main"
+          skip-changelog: true
 
   test-docker-tag:
     docker:
