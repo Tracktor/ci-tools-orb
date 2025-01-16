@@ -9,7 +9,7 @@ fi
 [[ -z "${TAG:-}" ]] && echo "TAG is not set" && exit 1
 
 _BRANCH="${BRANCH:-main}"
-_CREATE_RELEASE="$(to_boolean "${CREATE_RELEASE:-true}")"
+_CREATE_RELEASE="${CREATE_RELEASE:-true}"
 
 echo "Pushing branch $_BRANCH and tag $TAG"
 if ! git push origin "$_BRANCH" --tags; then
