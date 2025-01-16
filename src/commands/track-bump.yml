@@ -45,6 +45,7 @@ parameters:
   tag_pattern:
     type: string
     description: "Pattern to pass to git-cliff"
+    default: ""
   after_steps:
     type: steps
     default: []
