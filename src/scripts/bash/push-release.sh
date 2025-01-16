@@ -8,7 +8,7 @@ fi
 
 [[ -z "${TAG:-}" ]] && echo "TAG is not set" && exit 1
 
-_BRANCH="${BRANCH:-main}"
+_BRANCH="${BRANCH:-$(git branch --show-current)}"
 _CREATE_RELEASE="${CREATE_RELEASE:-true}"
 
 echo "Pushing branch $_BRANCH and tag $TAG"
