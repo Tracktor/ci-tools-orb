@@ -2,6 +2,10 @@
 
 set -xeuo pipefail
 
+if [ -f .tag ]; then
+    TAG=$(cat .tag)
+fi
+
 [[ -z "${TAG:-}" ]] && echo "TAG is not set" && exit 1
 
 _BRANCH="${BRANCH:-main}"
