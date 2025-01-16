@@ -42,7 +42,14 @@ parameters:
     type: boolean
     description: "Create a release on github"
     default: true
-
+  tag_pattern:
+    type: string
+    description: "Pattern to pass to git-cliff"
+    default: "^v\d+\.\d+\.\d+$"
+  steps:
+    type: steps
+    default: []
+    description: "Steps to run before pushing the changes"
 steps:
   - run:
       name: Bump version
@@ -54,5 +61,17 @@ steps:
         DRY_RUN: << parameters.dry_run >>
         VERBOSE: << parameters.verbose >>
         TRACK_BUMP_VERSION: << parameters.track_bump_version >>
-        CREATE_RELEASE: << parameters.create_release >>
       command: << include(scripts/bash/track-bump.sh) >>
+  - run:
+      name: Generate changelog
+      environment:
+        TAG_PATTERN: << parameters.tag_pattern >>
+      command: << include(scripts/bash/gen-changelog.sh) >>
+  - run:
+      steps: << parameters.steps >>
+  - run:
+      name: Push changes
+      environment:
+        BRANCH: << parameters.branch >>
+        CREATE_RELEASE: << parameters.create_release >>
+      command: << include(scripts/bash/push-release.sh) >>
