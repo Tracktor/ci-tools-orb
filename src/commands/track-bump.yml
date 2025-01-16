@@ -26,7 +26,7 @@ parameters:
     type: string
     default: ''
     description: "Arguments to pass to the bump"
-  dry_run:
+  dry-run:
     type: boolean
     description: "Do not commit or push the changes"
     default: false
@@ -34,22 +34,26 @@ parameters:
     type: boolean
     description: "Print the commands executed"
     default: false
-  track_bump_version:
+  track-bump-version:
     type: string
     description: "Version of the track-bump library"
     default: "latest"
-  create_release:
+  create-release:
     type: boolean
     description: "Create a release on github"
     default: true
-  tag_pattern:
+  tag-pattern:
     type: string
     description: "Pattern to pass to git-cliff"
     default: ""
-  after_steps:
+  after-steps:
     type: steps
-    default: []
+    default: [ ]
     description: "Steps to run before pushing the changes"
+  skip-changelog:
+    type: boolean
+    description: "Skip generating the changelog"
+    default: false
 steps:
   - run:
       name: Bump version
@@ -58,19 +62,24 @@ steps:
         BRANCH: << parameters.branch >>
         SIGN_COMMIT: << parameters.sign >>
         CUSTOM_PARAMS: << parameters.params >>
-        DRY_RUN: << parameters.dry_run >>
+        DRY_RUN: << parameters.dry-run >>
         VERBOSE: << parameters.verbose >>
-        TRACK_BUMP_VERSION: << parameters.track_bump_version >>
+        TRACK_BUMP_VERSION: << parameters.track-bump-version >>
       command: << include(scripts/bash/track-bump.sh) >>
   - run:
-      name: Generate changelog
-      environment:
-        TAG_PATTERN: << parameters.tag_pattern >>
-      command: << include(scripts/bash/gen-changelog.sh) >>
-  - steps: << parameters.after_steps >>
+      - when:
+          condition:
+            not: << parameters.dry-run >>
+          steps:
+            - run:
+                name: Generate changelog
+                environment:
+                  TAG_PATTERN: << parameters.tag-pattern >>
+                command: << include(scripts/bash/gen-changelog.sh) >>
+  - steps: << parameters.after-steps >>
   - run:
       name: Push changes
       environment:
         BRANCH: << parameters.branch >>
-        CREATE_RELEASE: << parameters.create_release >>
+        CREATE_RELEASE: << parameters.create-release >>
       command: << include(scripts/bash/push-release.sh) >>
