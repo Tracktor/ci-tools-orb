@@ -31,7 +31,11 @@ if [ -n "${CUSTOM_PARAMS:-}" ]; then
 fi
 
 # Run track bump
-"${cmd_args[@]}" | tee >(tail -n 1 > .tag)
+if ! output=$("${cmd_args[@]}" 2>&1); then
+    echo "$output" >&2
+    exit 1
+fi
+echo "$output" | tail -n 1 > .tag
 
 # Check that .tag is not empty
 if [ ! -s .tag ]; then
