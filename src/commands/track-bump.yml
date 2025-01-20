@@ -5,7 +5,7 @@ parameters:
   branch:
     type: string
     default: ""
-    description: "Branch to use to bump the version"
+    description: "Branch to use to bump the version (default current)"
   default-branch:
     type: string
     default: "main"

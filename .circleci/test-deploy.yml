@@ -100,7 +100,7 @@ jobs:
       - ci-tools/bump-version:
           branch: "main"
           lang: "python"
-          dry_run: true
+          dry-run: true
 
   test-bump-version-python-uv:
     docker:
@@ -118,7 +118,7 @@ jobs:
           branch: "main"
           lang: "python"
           tool: "uv"
-          dry_run: true
+          dry-run: true
 
   test-bump-version-python-no-build:
     docker:
@@ -136,7 +136,7 @@ jobs:
       - ci-tools/bump-version:
           branch: "main"
           lang: "python"
-          dry_run: true
+          dry-run: true
           build: false
 
   test-bump-version-python-default:
@@ -155,7 +155,7 @@ jobs:
       - ci-tools/bump-version:
           branch: "main"
           lang: "python"
-          dry_run: true
+          dry-run: true
           tool: "default"
           build: false
 
@@ -175,7 +175,7 @@ jobs:
       - ci-tools/bump-version:
           branch: "main"
           lang: "js"
-          dry_run: true
+          dry-run: true
           tool: "npm"
 
   test-python-track-bump:

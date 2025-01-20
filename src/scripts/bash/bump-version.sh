@@ -37,7 +37,7 @@ function fail() {
 
 
 # Initialize variables
-BRANCH="${BRANCH:-main}"
+_BRANCH="${BRANCH:-$(git branch --show-current)}"
 TOOL="${TOOL:-poetry}"
 LANG_TYPE="${LANG_TYPE:-}"
 _DRY_RUN="$(to_boolean "${DRY_RUN:-false}")"
@@ -46,7 +46,7 @@ _SIGN_COMMIT="$(to_boolean "${SIGN_COMMIT:-false}")"
 _CUSTOM_ARGS="${CUSTOM_ARGS:-}"
 
 # Make them readonly
-readonly BRANCH TOOL LANG_TYPE _DRY_RUN _BUILD _SIGN_COMMIT _CUSTOM_ARGS
+readonly _BRANCH TOOL LANG_TYPE _DRY_RUN _BUILD _SIGN_COMMIT _CUSTOM_ARGS
 
 
 function check_requirements() {
@@ -166,8 +166,8 @@ function bump_push_python() {
     build_python_package
 
     if [[ "$_DRY_RUN" == "false" ]]; then
-        log "Pushing changes to $BRANCH"
-        git push origin "$BRANCH"
+        log "Pushing changes to $_BRANCH"
+        git push origin "$_BRANCH"
 
         if [[ "$_BUILD" == "true" ]]; then
             gh release create -F CHANGELOG.md "$tag" ./dist/*.whl

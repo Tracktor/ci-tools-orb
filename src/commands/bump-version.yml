@@ -6,8 +6,8 @@ description: >
 parameters:
   branch:
     type: string
-    default: "main"
-    description: "Branch to use to bump the version"
+    default: ""
+    description: "Branch to use to bump the version (default current)"
   lang:
     type: string
     description: "Language of the project: js or python"
@@ -43,6 +43,7 @@ parameters:
   custom-args:
     type: string
     description: "Custom arguments to pass to the bump version command"
+    default: ""
 steps:
   - run:
       name: Bump version
