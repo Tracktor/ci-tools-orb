@@ -12,6 +12,7 @@ _BRANCH="${BRANCH:-$(git branch --show-current)}"
 
 _CREATE_RELEASE="${CREATE_RELEASE:-0}"
 
+git tag "$TAG"
 echo "Pushing branch $_BRANCH and tag $TAG"
 if ! git push origin "$_BRANCH" --tags; then
     echo "Error: Failed to push branch and tags" >&2
