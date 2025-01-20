@@ -18,7 +18,7 @@ if [ "${VERBOSE:-0}" = "1" ]; then
     cmd_args+=("-vv")
 fi
 
-cmd_args+=("bump" "--branch" "$_BRANCH" "--no-reset-git")
+cmd_args+=("bump" "--branch" "$_BRANCH" "--no-reset-git" "--no-tag")
 
 if [ "${SIGN_COMMIT:-0}" = "1" ]; then
     cmd_args+=("--sign")
@@ -31,16 +31,13 @@ if [ -n "${CUSTOM_PARAMS:-}" ]; then
 fi
 
 # Run track bump
-"${cmd_args[@]}"
+"${cmd_args[@]}" | tee >(tail -n 1 > .tag)
 
-
-# Get the latest tag
-TAG=$(uvx track-bump@"$_TRACK_BUMP_VERSION" get-latest-tag --branch "$_BRANCH")
-if [ -z "$TAG" ]; then
-    echo "Error: Failed to get latest tag" >&2
+# Check that .tag is not empty
+if [ ! -s .tag ]; then
+    echo "Error: .tag is empty" >&2
     exit 1
 fi
 
 # shellcheck disable=SC2016
-echo 'export TAG="$TAG"' >> "$BASH_ENV"
 echo "$TAG" > .tag
