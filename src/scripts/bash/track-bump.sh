@@ -39,5 +39,3 @@ if [ ! -s .tag ]; then
     exit 1
 fi
 
-# shellcheck disable=SC2016
-echo "$TAG" > .tag
