@@ -43,9 +43,10 @@ LANG_TYPE="${LANG_TYPE:-}"
 _DRY_RUN="$(to_boolean "${DRY_RUN:-false}")"
 _BUILD="$(to_boolean "${BUILD:-true}")"
 _SIGN_COMMIT="$(to_boolean "${SIGN_COMMIT:-false}")"
+_CUSTOM_ARGS="${CUSTOM_ARGS:-}"
 
 # Make them readonly
-readonly BRANCH TOOL LANG_TYPE _DRY_RUN _BUILD _SIGN_COMMIT
+readonly BRANCH TOOL LANG_TYPE _DRY_RUN _BUILD _SIGN_COMMIT _CUSTOM_ARGS
 
 
 function check_requirements() {
@@ -181,7 +182,7 @@ function bump_push_python() {
 function bump_push_js() {
     case "$TOOL" in
         npm) npm version patch ;;
-        yarn) yarn commit-and-tag-version ;;
+        yarn) yarn commit-and-tag-version "$_CUSTOM_ARGS";;
     esac
 
     local tag

@@ -19,7 +19,7 @@ parameters:
     type: env_var_name
     description: "User to use for the git commit"
     default: CI_USER
-  dry_run:
+  dry-run:
     type: boolean
     description: "Do not commit or push the changes"
     default: false
@@ -40,14 +40,18 @@ parameters:
     type: boolean
     description: "Sign the commit"
     default: false
+  custom-args:
+    type: string
+    description: "Custom arguments to pass to the bump version command"
 steps:
   - run:
       name: Bump version
       environment:
         LANG_TYPE: << parameters.lang >>
         BRANCH: << parameters.branch >>
-        DRY_RUN: << parameters.dry_run >>
+        DRY_RUN: << parameters.dry-run >>
         TOOL: << parameters.tool >>
         BUILD: << parameters.build >>
         SIGN_COMMIT: << parameters.sign >>
+        CUSTOM_ARGS: << parameters.custom-args >>
       command: << include(scripts/bash/bump-version.sh) >>
