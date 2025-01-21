@@ -1,0 +1,6 @@
+{
+  "version": "0.1.0",
+  "track-bump": {
+    "bumpMessage": "chore: release {current_version} → {new_version} [skip ci]"
+  }
+}

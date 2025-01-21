@@ -195,6 +195,23 @@ jobs:
           branch: "main"
           skip-changelog: true
 
+  test-js-track-bump:
+    docker:
+      - image: tracktor/python-ci:3.12.8-node
+    working_directory: ~/ci-tools-orb/projects/js-track-bump
+    environment:
+      CI_EMAIL: "test@test.test"
+      CI_USER: "test"
+    steps:
+      - checkout:
+          path: ~/ci-tools-orb
+      - ci-tools/track-bump:
+          dry-run: true
+          default-branch: "main"
+          verbose: true
+          branch: "main"
+          skip-changelog: true
+
   test-docker-tag:
     docker:
       - image: tracktor/python-ci:3.12.8-node
@@ -229,6 +246,8 @@ workflows:
           filters: *filters
       - test-python-track-bump:
           filters: *filters
+      - test-js-track-bump:
+          filters: *filters
       - test-docker-tag:
           filters: *filters
       - orb-tools/pack:
@@ -249,6 +268,7 @@ workflows:
             - test-bump-version-python-no-build
             - test-bump-version-python-uv
             - test-python-track-bump
+            - test-js-track-bump
             - test-docker-tag
           context: orb-publishing
           filters:
