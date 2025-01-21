@@ -54,6 +54,10 @@ parameters:
     type: boolean
     description: "Skip generating the changelog"
     default: false
+  changelog-params:
+    type: string
+    default: ''
+    description: "Arguments to pass to the changelog generation"
 steps:
   - run:
       name: Bump version
@@ -74,6 +78,7 @@ steps:
             name: Generate changelog
             environment:
               TAG_PATTERN: << parameters.tag-pattern >>
+              CUSTOM_ARGS: << parameters.changelog-params >>
             command: << include(scripts/bash/gen-changelog.sh) >>
         - run:
             name: Adding changelog
