@@ -70,6 +70,7 @@ steps:
         VERBOSE: << parameters.verbose >>
         TRACK_BUMP_VERSION: << parameters.track-bump-version >>
       command: << include(scripts/bash/track-bump.sh) >>
+  - steps: << parameters.after-steps >>
   - when:
       condition:
         not: << parameters.skip-changelog >>
@@ -85,7 +86,6 @@ steps:
             command: |
               git add CHANGELOG.md
               git commit --amend --no-edit
-  - steps: << parameters.after-steps >>
   - when:
       condition:
         not: << parameters.dry-run >>
