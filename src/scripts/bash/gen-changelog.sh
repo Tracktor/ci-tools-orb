@@ -3,7 +3,7 @@
 set -xeuo pipefail
 
 _CUSTOM_ARGS="${CUSTOM_ARGS:-}"
-_TAG_PATTERN=${TAG_PATTERN:-"^v\d+\.\d+\.\d+$"}
+_TAG_PATTERN=${TAG_PATTERN:-"^v?\d+\.\d+\.\d+$"}
 
 if [ -f .tag ]; then
     TAG=$(cat .tag)
