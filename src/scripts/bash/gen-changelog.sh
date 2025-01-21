@@ -12,7 +12,8 @@ fi
 [[ -z "${TAG:-}" ]] && echo "TAG is not set" && exit 1
 
 
-if ! uvx git-cliff -o CHANGELOG.md --unreleased --tag-pattern "$_TAG_PATTERN" --tag "$TAG"  "$_CUSTOM_ARGS"; then
+# shellcheck disable=SC2086
+if ! uvx git-cliff -o CHANGELOG.md --unreleased --tag-pattern "$_TAG_PATTERN" --tag "$TAG"  $_CUSTOM_ARGS; then
     echo "Error: Failed to generate CHANGELOG" >&2
     exit 1
 fi
