@@ -7,10 +7,8 @@ if [ -f .tag ]; then
 fi
 
 [[ -z "${TAG:-}" ]] && echo "TAG is not set" && exit 1
-
+[[ -z "${DEFAULT_BRANCH:-}" ]] && echo "DEFAULT_BRANCH is not set" && exit 1
 _BRANCH="${BRANCH:-$(git branch --show-current)}"
-
-_CREATE_RELEASE="${CREATE_RELEASE:-0}"
 
 git tag "$TAG"
 echo "Pushing branch $_BRANCH and tag $TAG"
@@ -19,7 +17,7 @@ if ! git push origin "$_BRANCH" --tags; then
     exit 1
 fi
 
-if [ "$_CREATE_RELEASE" = "1" ]; then
+if [ "$DEFAULT_BRANCH" = "$BRANCH" ]; then
     echo "Creating Github release $TAG"
     if ! gh release create -F CHANGELOG.md "$TAG"; then
         echo "Error: Failed to create Github release" >&2

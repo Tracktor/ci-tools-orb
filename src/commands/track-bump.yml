@@ -38,10 +38,6 @@ parameters:
     type: string
     description: "Version of the track-bump library"
     default: "latest"
-  create-release:
-    type: boolean
-    description: "Create a release on github"
-    default: true
   tag-pattern:
     type: string
     description: "Pattern to pass to git-cliff"
@@ -94,5 +90,5 @@ steps:
             name: Push changes
             environment:
               BRANCH: << parameters.branch >>
-              CREATE_RELEASE: << parameters.create-release >>
+              DEFAULT_BRANCH: << parameters.default-branch >>
             command: << include(scripts/bash/push-release.sh) >>
