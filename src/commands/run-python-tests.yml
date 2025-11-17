@@ -3,7 +3,7 @@ description: >
 
 parameters:
   extras:
-    description: "Package install extra parameters"
+    description: "Package install extra parameters (only for poetry)"
     default: ""
     type: string
   tests-extras:
@@ -60,21 +60,6 @@ steps:
             key: deps-<< parameters.cache-version >>-{{ checksum "poetry.lock" }}
             paths:
               - /home/circleci/.cache/pypoetry/virtualenvs
-  - when:
-      condition:
-        equal: [ uv, << parameters.tool >> ]
-      steps:
-        - restore_cache:
-            keys:
-              - deps-<< parameters.cache-version >>-{{ checksum "uv.lock" }}
-        - run:
-            name: Install dependencies
-            command: uv venv
-            # uv pip sync << parameters.extras >>
-        - save_cache:
-            key: deps-<< parameters.cache-version >>-{{ checksum "uv.lock" }}
-            paths:
-              - /home/circleci/.cache/uv
 
 
   - steps: << parameters.before-steps >>
