@@ -163,6 +163,24 @@ function bump_push_python() {
         *) cz changelog "$tag" ;;
     esac
 
+    # Update lockfile after version bump
+    log "Updating lockfile for version $tag"
+    case "$TOOL" in
+        poetry)
+            poetry lock --no-update
+            git add poetry.lock
+            git commit --amend --no-edit
+            ;;
+        uv)
+            uv lock
+            git add uv.lock
+            git commit --amend --no-edit
+            ;;
+        default|*)
+            # For other tools, skip lockfile update
+            ;;
+    esac
+
     build_python_package
 
     if [[ "$_DRY_RUN" == "false" ]]; then
