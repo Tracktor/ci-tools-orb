@@ -146,12 +146,13 @@ function bump_push_python() {
         default|*)  ;;
     esac
 
-    if ! $bump_command; then
-        case $? in
-            21) log "No bump needed" ; return 0 ;;
-            *) fail "Version bump failed" ;;
-        esac
-    fi
+    local bump_exit=0
+    $bump_command || bump_exit=$?
+    case $bump_exit in
+        0) ;;
+        21) log "No bump needed" ; return 0 ;;
+        *) fail "Version bump failed" ;;
+    esac
 
     local tag
     tag=$(get_python_version)
